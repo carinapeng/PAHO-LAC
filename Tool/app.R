@@ -263,7 +263,6 @@ server <- function(input, output, session) {
         if (is.null(df())) {
             return(NULL)
         }
-        
         else {
             return(municipal())
         }
@@ -271,41 +270,94 @@ server <- function(input, output, session) {
     })
     
     output$pop_dens01 <- renderPrint({
-        return(contexto01())
+        if (is.null(municipal()$contexto01)) {
+            return(writeLines(c("Value NOT found", contexto01())))
+        }
+        
+        else {
+            return(writeLines(c(contexto01())))
+        }
     })
     
     output$water02 <- renderPrint({
-        return(writeLines(contexto02()))
+        if (is.null(municipal()$contexto02)) {
+            return(writeLines(c("Value NOT found", contexto02())))
+        }
+        
+        else {
+            return(writeLines(c(contexto02())))
+        }
     })
     
     output$occupation03 <- renderPrint({
-        return(writeLines(contexto03()))
+        if (is.null(municipal()$contexto03)) {
+            return(writeLines(c("Value NOT found", contexto03())))
+        }
+        
+        else {
+            return(writeLines(c(contexto03())))
+        }
     })
     
     output$workout04 <- renderPrint({
-        return(writeLines(contexto04()))
+        if (is.null(municipal()$contexto04)) {
+            return(writeLines(c("Value NOT found", contexto04())))
+        }
+        
+        else {
+            return(writeLines(c(contexto04())))
+        }
     })
     
     output$publictrans05 <- renderPrint({
-        return(writeLines(contexto05()))
+        if (is.null(municipal()$contexto05)) {
+            return(writeLines(c("Value NOT found. Please use slider.", contexto05())))
+        }
+        
+        else {
+            return(writeLines(c(contexto05())))
+        }
     })
     
     output$comorbidity06 <- renderPrint({
-        return(writeLines(contexto06()))
+        if (is.null(municipal()$contexto06)) {
+            return(writeLines(c("Value NOT found", contexto06())))
+        }
+        
+        else {
+            return(writeLines(c(contexto06())))
+        }
     })
     
     output$vac_children07 <- renderPrint({
-        return(writeLines(contexto07()))
+        if (is.null(municipal()$contexto07)) {
+            return(writeLines(c("Value NOT found", contexto07())))
+        }
+        
+        else {
+            return(writeLines(c(contexto07())))
+        }
     })
     
     output$vac_elder08 <- renderPrint({
-        return(writeLines(contexto08()))
+        if (is.null(municipal()$contexto08)) {
+            return(writeLines(c("Value NOT found", contexto08())))
+        }
+        
+        else {
+            return(writeLines(c(contexto08())))
+        }
     })
     
     output$stunted09 <- renderPrint({
-        return(writeLines(contexto09()))
+        if (is.null(municipal()$contexto09)) {
+            return(writeLines(c("Value NOT found", contexto09())))
+        }
+        
+        else {
+            return(writeLines(c(contexto09())))
+        }
     })
-    
     
 
     individual <- reactive({
