@@ -312,7 +312,13 @@ server <- function(input, output, session) {
         individual_vunerability <- (as.numeric(contexto01())*2 + 
                                         as.numeric(contexto02())*1 + 
                                         as.numeric(contexto03())*1 + 
-                                        as.numeric(contexto04())*1)
+                                        as.numeric(contexto04())*1 +
+                                        as.numeric(contexto05())*1 +
+                                        as.numeric(contexto06())*3 +
+                                        as.numeric(contexto07())*2 +
+                                        as.numeric(contexto08())*2 +
+                                        as.numeric(contexto09())*2
+                                    )
         return(individual_vunerability)
     })
     
