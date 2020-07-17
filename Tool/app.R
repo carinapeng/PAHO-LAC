@@ -84,30 +84,53 @@ ui <- fluidPage(
             tabsetPanel( #type = "tabs",
                 tabPanel("Welcome", 
                          withMathJax(includeMarkdown("/Users/carinapeng/Projects/Harvard-WHO/COVID19/Modeling-COVID19.md")),
-                         downloadButton("downloadData", "Download Coded CSV File"),
-                         h3(textOutput("contents1")),
+                         h3(textOutput("upload")),
                          selectInput('mydropdown', label = 'Select', choices = 'No choices here yet'),
                          hr(),
                          fluidRow(column(3, verbatimTextOutput("value"))),
                          # Display uploaded csv file
                          tableOutput("contents")
                 ),
-                tabPanel("Graphs", 
-                         plotOutput("contents3"),
-                         plotOutput("contents4")
-                ),
-                tabPanel("Statistics", 
-                         h3("Summary Statistics"),
-                         verbatimTextOutput("contents5"),
-                         tableOutput("contents2"),
-                         downloadButton("downloadData2", "Download Summary Statistics of Transmission Rates")),
-                tabPanel("Public Policy Analysis",
-                         h3("Estimating the Impact of Public Health Measures on COVID-19 Transmission as Modeled in the CovidSIM Interface"),
+                tabPanel("Context",
+                         h3("Demographic and Socio-economic Information about the Neighborhood"),
                          withMathJax(includeMarkdown("/Users/carinapeng/Dropbox/Harvard-WHO/Harvard-WHO/COVID19/policy.md")),
-                         h4("Availability of water and soap for hand washing inside the home"),
-                         verbatimTextOutput("contexto01"),
-                
-                         h3("Period Duration Parameters (Days)"),
+                         h3("Individual Vunerability Index"),
+                         sliderInput("pop_dens", label = h5("Population density / Km²"), min = 0, 
+                                     max = 31, value = 2),
+                         verbatimTextOutput("pop_dens01"),
+                         
+                         sliderInput("water", label = h5("Availability of water and soap for hand washing inside the home"), min = 0, 
+                                     max = 31, value = 2),
+                         verbatimTextOutput("water02"),
+                         
+                         sliderInput("occupation", label = h5("Proportion of the population who is staffing an essential worker position"), min = 0, 
+                                     max = 31, value = 2),
+                         verbatimTextOutput("occupation03"),
+                         
+                         sliderInput("workout", label = h5("Proportion of the population working outside the home"), min = 0, 
+                                     max = 31, value = 2),
+                         verbatimTextOutput("workout04"),
+                         
+                         sliderInput("publictrans", label = h5("Proportion of the population who uses public transport"), min = 0, 
+                                     max = 31, value = 2),
+                         verbatimTextOutput("publictrans05"),
+                         
+                         sliderInput("comorbidity", label = h5("Proportion of persons with pre-existing comorbidities"), min = 0, 
+                                     max = 31, value = 2),
+                         verbatimTextOutput("comorbidity06"),
+                         
+                         sliderInput("vac_children", label = h5("Under- or non-vaccinated population: children younger than 1"), min = 0, 
+                                     max = 31, value = 2),
+                         verbatimTextOutput("vac_children07"),
+                         
+                         sliderInput("vac_elder", label = h5("Under- or non-vaccinated population: persons age 60 or older"), min = 0, 
+                                     max = 31, value = 2),
+                         verbatimTextOutput("vac_elder08"),
+                         
+                         sliderInput("stunted", label = h5("Proportion of the population who is stunted"), min = 0, 
+                                     max = 31, value = 2),
+                         verbatimTextOutput("stunted09"),
+                         
                          fluidRow(
                              column(3,
                                     
@@ -181,6 +204,14 @@ ui <- fluidPage(
         
     
 server <- function(input, output, session) { 
+    
+    output$upload <- renderPrint({
+        if (is.null(csv())) {
+            return(NULL)
+        }
+        return(writeLines("Uploaded File"))
+    })
+    
     csv <- reactive({
         req(input$file1)
         read.csv(input$file1$datapath,
@@ -208,7 +239,7 @@ server <- function(input, output, session) {
     
     contexto01 <- reactive({
         if (is.null(municipal()$contexto01)) {
-            return(input$Fiso)
+            return(input$pop_dens)
         }
         else {
             return(municipal()$contexto01)
@@ -217,7 +248,7 @@ server <- function(input, output, session) {
     
     contexto02 <- reactive({
         if (is.null(municipal()$contexto02)) {
-            return(input$Fiso)
+            return(input$water)
         }
         else {
             return(municipal()$contexto02)
@@ -256,12 +287,42 @@ server <- function(input, output, session) {
         
     })
     
-    output$contents1 <- renderPrint({
-        if (is.null(csv())) {
-            return(NULL)
-        }
-        return(writeLines("Uploaded File"))
+    output$pop_dens01 <- renderPrint({
+        return(writeLines(c("Population density / Km²", contexto01())))
     })
+    
+    output$water02 <- renderPrint({
+        return(writeLines(c("Availability of water and soap for hand washing inside the home", contexto02())))
+    })
+    
+    output$occupation03 <- renderPrint({
+        return(writeLines(c("Proportion of the population who is staffing an essential worker position", contexto03())))
+    })
+    
+    output$workout04 <- renderPrint({
+        return(writeLines(c("Proportion of the population working outside the home", contexto04())))
+    })
+    
+    output$publictrans05 <- renderPrint({
+        return(writeLines(c("Proportion of the population who uses public transport", contexto05())))
+    })
+    
+    output$comorbidity06 <- renderPrint({
+        return(writeLines(c("Proportion of persons with pre-existing comorbidities", contexto06())))
+    })
+    
+    output$vac_children07 <- renderPrint({
+        return(writeLines(c("Under- or non-vaccinated population: children younger than 1", contexto07())))
+    })
+    
+    output$vac_elder08 <- renderPrint({
+        return(writeLines(c("Under- or non-vaccinated population: persons age 60 or older", contexto08())))
+    })
+    
+    output$stunted09 <- renderPrint({
+        return(writeLines(c("Proportion of the population who is stunted", contexto09())))
+    })
+    
     
 
     individual <- reactive({
@@ -277,9 +338,7 @@ server <- function(input, output, session) {
         return(writeLines(c("Individual Vunerability Score", individual())))
     })
     
-    output$contexto01 <- renderPrint({
-        return(writeLines(c("contexto01", contexto01())))
-    })
+    
     
     social <- reactive({
         social_vunerability <- (municipal()$contexto10*1 + 
