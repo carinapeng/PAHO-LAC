@@ -131,68 +131,6 @@ ui <- fluidPage(
                                      max = 31, value = 2),
                          verbatimTextOutput("stunted09"),
                          
-                         fluidRow(
-                             column(3,
-                                    
-                                    # Copy the line below to make a slider bar 
-                                    sliderInput("Dp", label = h4("Prodromal Period (Days)"), min = 0, 
-                                                max = 31, value = 2)
-                             ),
-                             column(3,
-                                    
-                                    # Copy the line below to make a slider range 
-                                    sliderInput("Di", label = h4("Early Infective (Days)"), min = 0, 
-                                                max = 31, value = 5)
-                             ),
-                             column(3,
-                                    
-                                    # Copy the line below to make a slider range 
-                                    sliderInput("Dl", label = h4("Late Infective (Days)"), min = 0, 
-                                                max = 31, value = 7)
-                             )
-                         ),
-                         h3("Relative Contagiousness Parameters (%)"),
-                         fluidRow(
-                             column(3,
-                                    
-                                    # Copy the line below to make a slider bar 
-                                    sliderInput("Cp", label = h4("Prodromal (%)"), min = 0, 
-                                                max = 1, value = 1)
-                             ),
-                             column(3,
-                                    
-                                    # Copy the line below to make a slider range 
-                                    sliderInput("Cl", label = h4("Early Infective (%)"), min = 0, 
-                                                max = 1, value = 0.05)
-                             ),
-                             column(3,
-                                    
-                                    # Copy the line below to make a slider range 
-                                    sliderInput("R0", label = h4("Initial Rate of Infection"), min = 0, 
-                                                max = 10, value = 3.7, step=0.1)
-                             )
-                         ),
-                         h3("Transmission Parameters"),
-                         fluidRow(
-                             column(3,
-                                    
-                                    # Copy the line below to make a slider bar 
-                                    sliderInput("Fsick", label = h4("Infections Which Will Lead to Sickness (%)"), min = 0, 
-                                                max = 1, value = 0.67),
-                             ),
-                             column(3,
-                                    
-                                    # Copy the line below to make a slider range 
-                                    sliderInput("Fiso", label = h4("Probability Sick Person is Isolated (%)"), min = 0, 
-                                                max = 1, value = 0.5)
-                             ),
-                             column(3,
-                                    
-                                    # Copy the line below to make a slider range 
-                                    sliderInput("Phome", label = h4("Contact Reduction for Isolated Cases (%)"), min = 0, 
-                                                max = 1, value = 0.75)
-                             ),
-                         ),
                          h3("Risk Component: Context"),
                          verbatimTextOutput("context"),
                          verbatimTextOutput("context2"),
@@ -242,7 +180,7 @@ server <- function(input, output, session) {
             return(input$pop_dens)
         }
         else {
-            return(municipal()$contexto01)
+            return(as.character(municipal()$contexto01))
         }
     })
     
@@ -251,25 +189,70 @@ server <- function(input, output, session) {
             return(input$water)
         }
         else {
-            return(municipal()$contexto02)
+            return(as.character(municipal()$contexto02))
         }
     })
     
     contexto03 <- reactive({
         if (is.null(municipal()$contexto03)) {
-            return(input$Fiso)
+            return(input$occupation)
         }
         else {
-            return(municipal()$contexto03)
+            return(as.character(municipal()$contexto03))
         }
     })
     
     contexto04 <- reactive({
         if (is.null(municipal()$contexto04)) {
-            return(input$Fiso)
+            return(input$workout)
         }
         else {
-            return(municipal()$contexto04)
+            return(as.character(municipal()$contexto04))
+        }
+    })
+    
+    contexto05 <- reactive({
+        if (is.null(municipal()$contexto05)) {
+            return(input$publictrans)
+        }
+        else {
+            return(as.character(municipal()$contexto05))
+        }
+    })
+    
+    contexto06 <- reactive({
+        if (is.null(municipal()$contexto06)) {
+            return(input$comorbidity)
+        }
+        else {
+            return(as.character(municipal()$contexto06))
+        }
+    })
+    
+    contexto07 <- reactive({
+        if (is.null(municipal()$contexto07)) {
+            return(input$vac_children)
+        }
+        else {
+            return(as.character(municipal()$contexto07))
+        }
+    })
+    
+    contexto08 <- reactive({
+        if (is.null(municipal()$contexto08)) {
+            return(input$vac_elder)
+        }
+        else {
+            return(as.character(municipal()$contexto08))
+        }
+    })
+    
+    contexto09 <- reactive({
+        if (is.null(municipal()$contexto09)) {
+            return(input$stunted)
+        }
+        else {
+            return(as.character(municipal()$contexto09))
         }
     })
     
@@ -288,39 +271,39 @@ server <- function(input, output, session) {
     })
     
     output$pop_dens01 <- renderPrint({
-        return(writeLines(c("Population density / Km²", contexto01())))
+        return(contexto01())
     })
     
     output$water02 <- renderPrint({
-        return(writeLines(c("Availability of water and soap for hand washing inside the home", contexto02())))
+        return(writeLines(contexto02()))
     })
     
     output$occupation03 <- renderPrint({
-        return(writeLines(c("Proportion of the population who is staffing an essential worker position", contexto03())))
+        return(writeLines(contexto03()))
     })
     
     output$workout04 <- renderPrint({
-        return(writeLines(c("Proportion of the population working outside the home", contexto04())))
+        return(writeLines(contexto04()))
     })
     
     output$publictrans05 <- renderPrint({
-        return(writeLines(c("Proportion of the population who uses public transport", contexto05())))
+        return(writeLines(contexto05()))
     })
     
     output$comorbidity06 <- renderPrint({
-        return(writeLines(c("Proportion of persons with pre-existing comorbidities", contexto06())))
+        return(writeLines(contexto06()))
     })
     
     output$vac_children07 <- renderPrint({
-        return(writeLines(c("Under- or non-vaccinated population: children younger than 1", contexto07())))
+        return(writeLines(contexto07()))
     })
     
     output$vac_elder08 <- renderPrint({
-        return(writeLines(c("Under- or non-vaccinated population: persons age 60 or older", contexto08())))
+        return(writeLines(contexto08()))
     })
     
     output$stunted09 <- renderPrint({
-        return(writeLines(c("Proportion of the population who is stunted", contexto09())))
+        return(writeLines(contexto09()))
     })
     
     
