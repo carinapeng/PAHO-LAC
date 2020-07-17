@@ -104,6 +104,9 @@ ui <- fluidPage(
                 tabPanel("Public Policy Analysis",
                          h3("Estimating the Impact of Public Health Measures on COVID-19 Transmission as Modeled in the CovidSIM Interface"),
                          withMathJax(includeMarkdown("/Users/carinapeng/Dropbox/Harvard-WHO/Harvard-WHO/COVID19/policy.md")),
+                         h4("Availability of water and soap for hand washing inside the home"),
+                         verbatimTextOutput("contexto01"),
+                
                          h3("Period Duration Parameters (Days)"),
                          fluidRow(
                              column(3,
@@ -174,12 +177,9 @@ ui <- fluidPage(
                          verbatimTextOutput("impactcontactreduction")
                 )
             )
-        )
+        )))
         
-    )
-)
-
-# Define server logic to read selected file ----
+    
 server <- function(input, output, session) { 
     csv <- reactive({
         req(input$file1)
@@ -197,7 +197,6 @@ server <- function(input, output, session) {
     
     observeEvent(input$file1, {
         updateSelectInput(session, "mydropdown", label = "Select", choices = csv()$comuna)
-        
     })
     
     municipal <- reactive({
@@ -206,6 +205,43 @@ server <- function(input, output, session) {
             filter(comuna == input$mydropdown)
         return(dfnew)
     })
+    
+    contexto01 <- reactive({
+        if (is.null(municipal()$contexto01)) {
+            return(input$Fiso)
+        }
+        else {
+            return(municipal()$contexto01)
+        }
+    })
+    
+    contexto02 <- reactive({
+        if (is.null(municipal()$contexto02)) {
+            return(input$Fiso)
+        }
+        else {
+            return(municipal()$contexto02)
+        }
+    })
+    
+    contexto03 <- reactive({
+        if (is.null(municipal()$contexto03)) {
+            return(input$Fiso)
+        }
+        else {
+            return(municipal()$contexto03)
+        }
+    })
+    
+    contexto04 <- reactive({
+        if (is.null(municipal()$contexto04)) {
+            return(input$Fiso)
+        }
+        else {
+            return(municipal()$contexto04)
+        }
+    })
+    
     
     # Can delete later
     output$contents <- renderTable({
@@ -227,25 +263,22 @@ server <- function(input, output, session) {
         return(writeLines("Uploaded File"))
     })
     
-    
-    output$contents5 <- renderPrint({
-        x <- df()$R$Mean
-        return(writeLines(c("The current reproductive number (R) is estimated to be", round(x[length(x)],digits=2))))
-        # return(, x[length(x)])
-    })  
-    
+
     individual <- reactive({
-        individual_vunerability <- (municipal()$contexto02*1 + municipal()$contexto03*1 + municipal()$contexto04*1)
+        individual_vunerability <- (as.numeric(contexto01())*2 + 
+                                        as.numeric(contexto02())*1 + 
+                                        as.numeric(contexto03())*1 + 
+                                        as.numeric(contexto04())*1)
         return(individual_vunerability)
     })
     
     
     output$context <- renderPrint({
-        y <- individual()
-        # return(writeLines("Case Isolation Number Obtained", contact()))
-        return(writeLines(c("Individual Vunerability Score",y)))
-        # return(y)
-        # return(impact_case_isolation)
+        return(writeLines(c("Individual Vunerability Score", individual())))
+    })
+    
+    output$contexto01 <- renderPrint({
+        return(writeLines(c("contexto01", contexto01())))
     })
     
     social <- reactive({
@@ -262,8 +295,7 @@ server <- function(input, output, session) {
     })
     
     output$context2 <- renderPrint({
-        z <- social()
-        return(writeLines(c("Social Vunerability Score",z)))
+        return(writeLines(c("Social Vunerability Score", social())))
     })
     
     
