@@ -96,18 +96,18 @@ ui <- fluidPage(
                          withMathJax(includeMarkdown("/Users/carinapeng/Dropbox/Harvard-WHO/Harvard-WHO/COVID19/policy.md")),
                          h3("Individual Vunerability Index"),
                          fluidRow(
-                             column(3,
-                                    sliderInput("pop_dens", label = h5("Population density / Km²"), min = 0, 
+                             column(2,
+                                    sliderInput("pop_dens", label = h4("Population density / Km²"), min = 0, 
                                                 max = 31, value = 2),
                                     verbatimTextOutput("pop_dens01")
                                     ),
-                             column(3,
-                                    sliderInput("water", label = h5("Availability of water and soap for hand washing inside the home"), min = 0, 
+                             column(2,
+                                    sliderInput("water", label = h4("Availability of water and soap for hand washing inside the home"), min = 0, 
                                                 max = 31, value = 2),
                                     verbatimTextOutput("water02")
                                     ),
-                             column(3,
-                                    sliderInput("occupation", label = h5("Proportion of the population who is staffing an essential worker position"), min = 0, 
+                             column(2,
+                                    sliderInput("occupation", label = h4("Proportion of the population who is staffing an essential worker position"), min = 0, 
                                                 max = 31, value = 2),
                                     verbatimTextOutput("occupation03")
                                     )
@@ -160,13 +160,6 @@ ui <- fluidPage(
     
 server <- function(input, output, session) { 
     
-    output$upload <- renderPrint({
-        if (is.null(csv())) {
-            return(NULL)
-        }
-        return(writeLines("Uploaded File"))
-    })
-    
     csv <- reactive({
         req(input$file1)
         read.csv(input$file1$datapath,
@@ -179,6 +172,13 @@ server <- function(input, output, session) {
         req(input$file1)
         x = csv()
         return(x)
+    })
+    
+    output$upload <- renderPrint({
+        if (is.null(csv())) {
+            return(NULL)
+        }
+        return(writeLines("Uploaded File"))
     })
     
     observeEvent(input$file1, {
