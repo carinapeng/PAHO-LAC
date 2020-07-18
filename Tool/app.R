@@ -38,12 +38,11 @@ ui <- fluidPage(
         sidebarPanel(
             
             # Input: Select a file ----
-            fileInput("file1", "Choose CSV File",
-                      multiple = FALSE,
+            fileInput("file1", "Choose CSV File(s)",
+                      multiple = TRUE,
                       accept = c("text/csv",
                                  "text/comma-separated-values,text/plain",
                                  ".csv")),
-            
             # Horizontal line ----
             tags$hr(),
             
@@ -85,7 +84,7 @@ ui <- fluidPage(
             # Output: Data file ----
             tabsetPanel( #type = "tabs",
                 tabPanel("Welcome", 
-                         withMathJax(includeMarkdown("/Users/carinapeng/Projects/Harvard-WHO/COVID19/Modeling-COVID19.md")),
+                         withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/welcome.md")),
                          h3(textOutput("upload")),
                          selectInput('mydropdown', label = 'Select', choices = 'No choices here yet'),
                          hr(),
@@ -158,36 +157,49 @@ ui <- fluidPage(
     
 server <- function(input, output, session) { 
     
-    csv <- reactive({
+    # Debug: Error: invalid 'description' argument 
+    
+    #csv <- reactive({
+        #req(input$file1)
+        #read.csv(input$file1$datapath,
+                 #header = input$header,
+                 #sep = input$sep,
+                 #quote = input$quote)
+    #})
+    
+    file01 <- reactive({
         req(input$file1)
-        read.csv(input$file1$datapath,
+        read.csv(input$file1[[1, 'datapath']],
                  header = input$header,
                  sep = input$sep,
                  quote = input$quote)
     })
     
-    df <- reactive({
+    file02 <- reactive({
         req(input$file1)
-        x = csv()
-        return(x)
+        read.csv(input$file1[[2, 'datapath']],
+                 header = input$header,
+                 sep = input$sep,
+                 quote = input$quote)
     })
     
-    output$upload <- renderPrint({
-        if (is.null(csv())) {
-            return(NULL)
-        }
-        return(writeLines("Uploaded File"))
-    })
+    
+    #output$upload <- renderPrint({
+        #if (is.null(csv())) {
+            #return(NULL)
+        #}
+        #return(writeLines("Uploaded File"))
+    #})
     
     observeEvent(input$file1, {
-        updateSelectInput(session, "mydropdown", label = "Select", choices = csv()$comuna)
+        updateSelectInput(session, "mydropdown", label = "Select", choices = file01()$comuna)
     })
     
     municipal <- reactive({
         req(input$mydropdown)
-        dfnew <- df() %>%
+        file01_municipal <- file01() %>%
             filter(comuna == input$mydropdown)
-        return(dfnew)
+        return(file01_municipal)
     })
     
     contexto01 <- reactive({
