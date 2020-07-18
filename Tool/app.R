@@ -95,6 +95,7 @@ ui <- fluidPage(
                 tabPanel("Context",
                          h3("Demographic and Socio-economic Information about the Neighborhood"),
                          withMathJax(includeMarkdown("/Users/carinapeng/Dropbox/Harvard-WHO/Harvard-WHO/COVID19/policy.md")),
+                         uiOutput("selectfile_context"),
                          h3("Individual Vunerability Index"),
                          fluidRow(
                              column(4,
@@ -158,13 +159,28 @@ ui <- fluidPage(
 server <- function(input, output, session) { 
     
     # Debug: Error: invalid 'description' argument 
-    
     #csv <- reactive({
         #req(input$file1)
         #read.csv(input$file1$datapath,
                  #header = input$header,
                  #sep = input$sep,
                  #quote = input$quote)
+    #})
+
+    
+    #output$upload <- renderPrint({
+        #if (is.null(csv())) {
+            #return(NULL)
+        #}
+        #return(writeLines("Uploaded File"))
+    #})
+    
+    
+    #output$selectfile_context <- renderUI({
+        #if(is.null(input$file1)) {return()}
+        #list(hr(),
+             #helpText("Select the coded census file"),
+             #selectInput("Select", "Select", choices=input$file1$name))
     #})
     
     file01 <- reactive({
@@ -178,21 +194,15 @@ server <- function(input, output, session) {
     file02 <- reactive({
         req(input$file1)
         read.csv(input$file1[[2, 'datapath']],
+        #read.csv(file=input$file1$datapath[input$file1$name==input$Select],
                  header = input$header,
                  sep = input$sep,
                  quote = input$quote)
     })
     
-    
-    #output$upload <- renderPrint({
-        #if (is.null(csv())) {
-            #return(NULL)
-        #}
-        #return(writeLines("Uploaded File"))
-    #})
-    
     observeEvent(input$file1, {
-        updateSelectInput(session, "mydropdown", label = "Select", choices = file01()$comuna)
+        #updateSelectInput(session, "mydropdown", label = "Select", choices = file01()$comuna)
+        updateSelectInput(session, "mydropdown", label = "Select", choices = file01()[1])
     })
     
     municipal <- reactive({
