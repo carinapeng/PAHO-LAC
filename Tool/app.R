@@ -21,10 +21,12 @@ library(ggpol)
 library(EpiEstim)
 library(markdown)
 library(shiny)
+library(shinyjs)
 #options(shiny.maxRequestSize=2650*1024^2)
 
 # Define UI for data upload app ----
 ui <- fluidPage(
+    useShinyjs(),
     
     # App title ----
     titlePanel("PAHO Risk Assessment Tool"),
@@ -96,58 +98,54 @@ ui <- fluidPage(
                          withMathJax(includeMarkdown("/Users/carinapeng/Dropbox/Harvard-WHO/Harvard-WHO/COVID19/policy.md")),
                          h3("Individual Vunerability Index"),
                          fluidRow(
-                             column(2,
+                             column(4,
                                     sliderInput("pop_dens", label = h4("Population density / Km²"), min = 0, 
-                                                max = 31, value = 2),
+                                                max = 4, value = 0),
                                     verbatimTextOutput("pop_dens01")
                                     ),
-                             column(2,
+                             column(4,
                                     sliderInput("water", label = h4("Availability of water and soap for hand washing inside the home"), min = 0, 
-                                                max = 31, value = 2),
+                                                max = 2, value = 0),
                                     verbatimTextOutput("water02")
                                     ),
-                             column(2,
+                             column(4,
                                     sliderInput("occupation", label = h4("Proportion of the population who is staffing an essential worker position"), min = 0, 
-                                                max = 31, value = 2),
+                                                max = 2, value = 0),
                                     verbatimTextOutput("occupation03")
+                                    )),
+                         fluidRow(
+                             column(4,
+                                    sliderInput("workout", label = h4("Proportion of the population working outside the home"), min = 0, 
+                                                max = 2, value = 0),
+                                    verbatimTextOutput("workout04")
+                                    ),
+                             column(4,
+                                    sliderInput("publictrans", label = h4("Proportion of the population who uses public transport"), min = 0, 
+                                                max = 2, value = 0),
+                                    verbatimTextOutput("publictrans05")
+                                    ),
+                             column(4,
+                                    sliderInput("comorbidity", label = h4("Proportion of persons with pre-existing comorbidities"), min = 0, 
+                                                max = 3, value = 0),
+                                    verbatimTextOutput("comorbidity06")
+                                    )),
+                         fluidRow(
+                             column(4,
+                                    sliderInput("vac_children", label = h4("Under- or non-vaccinated population: children younger than 1"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("vac_children07")
+                                    ),
+                             column(4,
+                                    sliderInput("vac_elder", label = h4("Under- or non-vaccinated population: persons age 60 or older"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("vac_elder08")
+                             ),
+                             column(4,
+                                    sliderInput("stunted", label = h4("Proportion of the population who is stunted"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("stunted09")
                                     )
                          ),
-                         sliderInput("pop_dens", label = h5("Population density / Km²"), min = 0, 
-                                     max = 31, value = 2),
-                         verbatimTextOutput("pop_dens01"),
-                         
-                         sliderInput("water", label = h5("Availability of water and soap for hand washing inside the home"), min = 0, 
-                                     max = 31, value = 2),
-                         verbatimTextOutput("water02"),
-                         
-                         sliderInput("occupation", label = h5("Proportion of the population who is staffing an essential worker position"), min = 0, 
-                                     max = 31, value = 2),
-                         verbatimTextOutput("occupation03"),
-                         
-                         sliderInput("workout", label = h5("Proportion of the population working outside the home"), min = 0, 
-                                     max = 31, value = 2),
-                         verbatimTextOutput("workout04"),
-                         
-                         sliderInput("publictrans", label = h5("Proportion of the population who uses public transport"), min = 0, 
-                                     max = 31, value = 2),
-                         verbatimTextOutput("publictrans05"),
-                         
-                         sliderInput("comorbidity", label = h5("Proportion of persons with pre-existing comorbidities"), min = 0, 
-                                     max = 31, value = 2),
-                         verbatimTextOutput("comorbidity06"),
-                         
-                         sliderInput("vac_children", label = h5("Under- or non-vaccinated population: children younger than 1"), min = 0, 
-                                     max = 31, value = 2),
-                         verbatimTextOutput("vac_children07"),
-                         
-                         sliderInput("vac_elder", label = h5("Under- or non-vaccinated population: persons age 60 or older"), min = 0, 
-                                     max = 31, value = 2),
-                         verbatimTextOutput("vac_elder08"),
-                         
-                         sliderInput("stunted", label = h5("Proportion of the population who is stunted"), min = 0, 
-                                     max = 31, value = 2),
-                         verbatimTextOutput("stunted09"),
-                         
                          h3("Risk Component: Context"),
                          verbatimTextOutput("context"),
                          verbatimTextOutput("context2"),
@@ -274,105 +272,112 @@ server <- function(input, output, session) {
     })
     
     
-    # Can delete later
-    output$contents <- renderTable({
-        
-        if (is.null(df())) {
-            return(NULL)
-        }
-        else {
-            return(municipal())
-        }
-        
-    })
+    # Shows the table for coded csv by selected municipal
+    #output$contents <- renderTable({
+        #if (is.null(df())) {
+            #return(NULL)
+        #}
+        #else {
+            #return(municipal())
+        #}
+    #})
     
     output$pop_dens01 <- renderPrint({
         if (is.null(municipal()$contexto01)) {
-            return(writeLines(c("Value NOT found", contexto01())))
+            #return(writeLines(c("Value NOT found", contexto01())))
+            return(writeLines("Please enter value."))
         }
         
         else {
-            return(writeLines(c(contexto01())))
+            #return(list(writeLines(c(contexto01())), disable("pop_dens")))
+            return(disable("pop_dens"))
         }
     })
     
     output$water02 <- renderPrint({
         if (is.null(municipal()$contexto02)) {
-            return(writeLines(c("Value NOT found", contexto02())))
+            return(writeLines("Please enter value."))
         }
         
         else {
-            return(writeLines(c(contexto02())))
+            return(disable("water")) 
         }
     })
     
     output$occupation03 <- renderPrint({
         if (is.null(municipal()$contexto03)) {
-            return(writeLines(c("Value NOT found", contexto03())))
+            return(writeLines("Please enter value."))
         }
         
         else {
-            return(writeLines(c(contexto03())))
+            #return(writeLines(c(contexto03())))
+            return(disable("occupation"))
         }
     })
     
     output$workout04 <- renderPrint({
         if (is.null(municipal()$contexto04)) {
-            return(writeLines(c("Value NOT found", contexto04())))
+            return(writeLines("Please enter value."))
         }
         
         else {
-            return(writeLines(c(contexto04())))
+            #return(writeLines(c(contexto04())))
+            return(disable("workout"))
         }
     })
     
     output$publictrans05 <- renderPrint({
         if (is.null(municipal()$contexto05)) {
-            return(writeLines(c("Value NOT found. Please use slider.", contexto05())))
+            return(writeLines("Please enter value."))
         }
         
         else {
-            return(writeLines(c(contexto05())))
+            #return(writeLines(c(contexto05())))
+            return(disable("publictrans"))
         }
     })
     
     output$comorbidity06 <- renderPrint({
         if (is.null(municipal()$contexto06)) {
-            return(writeLines(c("Value NOT found", contexto06())))
+            return(writeLines("Please enter value."))
         }
         
         else {
-            return(writeLines(c(contexto06())))
+            #return(writeLines(c(contexto06())))
+            return(disable("comorbidity"))
         }
     })
     
     output$vac_children07 <- renderPrint({
         if (is.null(municipal()$contexto07)) {
-            return(writeLines(c("Value NOT found", contexto07())))
+            return(writeLines("Please enter value."))
         }
         
         else {
-            return(writeLines(c(contexto07())))
+            #return(writeLines(c(contexto07())))
+            return(disable("vac_children"))
         }
     })
     
     output$vac_elder08 <- renderPrint({
         if (is.null(municipal()$contexto08)) {
-            return(writeLines(c("Value NOT found", contexto08())))
+            return(writeLines("Please enter value."))
         }
         
         else {
-            return(writeLines(c(contexto08())))
+            #return(writeLines(c(contexto08())))
+            return(disable("vac_elder"))
         }
     })
     
     output$stunted09 <- renderPrint({
         if (is.null(municipal()$contexto09)) {
-            return(writeLines(c("Value NOT found", contexto09())))
+            return(writeLines("Please enter value."))
         }
         
         else {
-            return(writeLines(c(contexto09())))
+            #return(writeLines(c(contexto09())))
+            return(disable("stunted"))
         }
     })
     
