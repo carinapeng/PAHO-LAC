@@ -94,7 +94,7 @@ ui <- fluidPage(
                 ),
                 tabPanel("Context",
                          h3("Demographic and Socio-economic Information about the Neighborhood"),
-                         withMathJax(includeMarkdown("/Users/carinapeng/Dropbox/Harvard-WHO/Harvard-WHO/COVID19/policy.md")),
+                         withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context.md")),
                          uiOutput("selectfile_context"),
                          h3("Individual Vunerability Index"),
                          fluidRow(

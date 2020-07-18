@@ -13,9 +13,9 @@ $$
 *Proportion of households in the neighborhood with indoor plumbing*  
 Weigh: **1**
 $$
-0=\;\gt75\%\\
-1=50\%\text{ to }75\%\\
-2=\;\lt50\%
+0=\;\gt75\% \\ 
+1=50\%\text{ to }75\% \\ 
+2=\;\lt50\% 
 $$
 
 #### Proportion of the population who is staffing an essential worker position
