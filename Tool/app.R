@@ -743,14 +743,18 @@ server <- function(input, output, session) {
     })
     
     social <- reactive({
-        social_vunerability <- (municipal()$contexto10*1 + 
-                                    municipal()$contexto12*1 +
-                                    municipal()$contexto13*2 +
-                                    municipal()$contexto14*1 +
-                                    municipal()$contexto17*2 +
-                                    municipal()$contexto18*2 +
-                                    municipal()$contexto19*3 +
-                                    municipal()$contexto21*3
+        social_vunerability <- (as.numeric(contexto10())*1 +
+                                    as.numeric(contexto11())*1 +
+                                    as.numeric(contexto12())*1 +
+                                    as.numeric(contexto13())*2 +
+                                    as.numeric(contexto14())*1 +
+                                    as.numeric(contexto15())*1 +
+                                    as.numeric(contexto16())*1 +
+                                    as.numeric(contexto17())*2 +
+                                    as.numeric(contexto18())*2 +
+                                    as.numeric(contexto19())*3 +
+                                    as.numeric(contexto20())*1 +
+                                    as.numeric(contexto21())*3
         )
         return(social_vunerability)
     })
