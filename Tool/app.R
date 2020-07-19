@@ -22,7 +22,9 @@ library(EpiEstim)
 library(markdown)
 library(shiny)
 library(shinyjs)
+library(knitr)
 #options(shiny.maxRequestSize=2650*1024^2)
+
 
 # Define UI for data upload app ----
 ui <- fluidPage(
@@ -84,6 +86,12 @@ ui <- fluidPage(
             # Output: Data file ----
             tabsetPanel( #type = "tabs",
                 tabPanel("Welcome", 
+                         tags$div(HTML("<script type='text/x-mathjax-config' >
+            MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+            });
+            </script >
+            ")),
                          withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/welcome.md")),
                          h3(textOutput("upload")),
                          selectInput('mydropdown', label = 'Select', choices = 'No choices here yet'),
@@ -92,65 +100,134 @@ ui <- fluidPage(
                          # Display uploaded csv file
                          tableOutput("contents")
                 ),
-                tabPanel("Context",
-                         h3("Demographic and Socio-economic Information about the Neighborhood"),
-                         withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context.md")),
-                         uiOutput("selectfile_context"),
-                         h3("Individual Vunerability Index"),
+                tabPanel("Individual Vunerability Index",
+                         h3("Context"),
+                         h4("Demographic and Socio-economic Information about the Neighborhood"),
                          fluidRow(
                              column(4,
-                                    sliderInput("pop_dens", label = h4("Population density / Km²"), min = 0, 
+                                    sliderInput("pop_dens", label = h4("1. Population density / Km²"), min = 0, 
                                                 max = 4, value = 0),
                                     verbatimTextOutput("pop_dens01")
+                
                                     ),
                              column(4,
-                                    sliderInput("water", label = h4("Availability of water and soap for hand washing inside the home"), min = 0, 
+                                    sliderInput("water", label = h4("2. Availability of water and soap for hand washing inside the home"), min = 0, 
                                                 max = 2, value = 0),
                                     verbatimTextOutput("water02")
                                     ),
                              column(4,
-                                    sliderInput("occupation", label = h4("Proportion of the population who is staffing an essential worker position"), min = 0, 
+                                    sliderInput("occupation", label = h4("3. Proportion of the population who is staffing an essential worker position"), min = 0, 
                                                 max = 2, value = 0),
                                     verbatimTextOutput("occupation03")
                                     )),
                          fluidRow(
                              column(4,
-                                    sliderInput("workout", label = h4("Proportion of the population working outside the home"), min = 0, 
+                                    sliderInput("workout", label = h4("4. Proportion of the population working outside the home"), min = 0, 
                                                 max = 2, value = 0),
                                     verbatimTextOutput("workout04")
                                     ),
                              column(4,
-                                    sliderInput("publictrans", label = h4("Proportion of the population who uses public transport"), min = 0, 
+                                    sliderInput("publictrans", label = h4("5. Proportion of the population who uses public transport"), min = 0, 
                                                 max = 2, value = 0),
                                     verbatimTextOutput("publictrans05")
                                     ),
                              column(4,
-                                    sliderInput("comorbidity", label = h4("Proportion of persons with pre-existing comorbidities"), min = 0, 
+                                    sliderInput("comorbidity", label = h4("6. Proportion of persons with pre-existing comorbidities"), min = 0, 
                                                 max = 3, value = 0),
                                     verbatimTextOutput("comorbidity06")
                                     )),
                          fluidRow(
                              column(4,
-                                    sliderInput("vac_children", label = h4("Under- or non-vaccinated population: children younger than 1"), min = 0, 
+                                    sliderInput("vac_children", label = h4("7. Under- or non-vaccinated population: children younger than 1"), min = 0, 
                                                 max = 1, value = 0),
                                     verbatimTextOutput("vac_children07")
                                     ),
                              column(4,
-                                    sliderInput("vac_elder", label = h4("Under- or non-vaccinated population: persons age 60 or older"), min = 0, 
+                                    sliderInput("vac_elder", label = h4("8. Under- or non-vaccinated population: persons age 60 or older"), min = 0, 
                                                 max = 1, value = 0),
                                     verbatimTextOutput("vac_elder08")
                              ),
                              column(4,
-                                    sliderInput("stunted", label = h4("Proportion of the population who is stunted"), min = 0, 
+                                    sliderInput("stunted", label = h4("9. Proportion of the population who is stunted"), min = 0, 
                                                 max = 1, value = 0),
                                     verbatimTextOutput("stunted09")
                                     )
                          ),
                          h3("Risk Component: Context"),
                          verbatimTextOutput("context"),
+                         withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context.md"))
+                ),
+                tabPanel("Social Vunerability Index",
+                         h3("Context"),
+                         h4("Demographic and Socio-economic Information about the Neighborhood"),
+                         fluidRow(
+                             column(4,
+                                    sliderInput("pop_dens", label = h4("10. Unemployment"), min = 0, 
+                                                max = 4, value = 0),
+                                    verbatimTextOutput("pop_dens01")
+                                    
+                             ),
+                             column(4,
+                                    sliderInput("water", label = h4("11. Per capita income"), min = 0, 
+                                                max = 2, value = 0),
+                                    verbatimTextOutput("water02")
+                             ),
+                             column(4,
+                                    sliderInput("occupation", label = h4("12. High school diploma"), min = 0, 
+                                                max = 2, value = 0),
+                                    verbatimTextOutput("occupation03")
+                             )),
+                         fluidRow(
+                             column(4,
+                                    sliderInput("workout", label = h4("13. Age 65 or older"), min = 0, 
+                                                max = 2, value = 0),
+                                    verbatimTextOutput("workout04")
+                             ),
+                             column(4,
+                                    sliderInput("publictrans", label = h4("14. Age 17 or younger"), min = 0, 
+                                                max = 2, value = 0),
+                                    verbatimTextOutput("publictrans05")
+                             ),
+                             column(4,
+                                    sliderInput("comorbidity", label = h4("15. Disability"), min = 0, 
+                                                max = 3, value = 0),
+                                    verbatimTextOutput("comorbidity06")
+                             )),
+                         fluidRow(
+                             column(4,
+                                    sliderInput("vac_children", label = h4("16. Single parent household"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("vac_children07")
+                             ),
+                             column(4,
+                                    sliderInput("vac_elder", label = h4("17. Ethinic minority"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("vac_elder08")
+                             ),
+                             column(4,
+                                    sliderInput("stunted", label = h4("18. Multi-unit housing"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("stunted09")
+                             )
+                         ),
+                         fluidRow(
+                             column(4,
+                                    sliderInput("vac_children", label = h4("19. Crowded household"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("vac_children07")
+                             ),
+                             column(4,
+                                    sliderInput("vac_elder", label = h4("20. Vehicle availability"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("vac_elder08")
+                             ),
+                             column(4,
+                                    sliderInput("stunted", label = h4("21. Group quarters"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("stunted09")
+                             )),
                          verbatimTextOutput("context2"),
-                         h3("Impact of Contact Reduction Policies on the Transmission"),
-                         verbatimTextOutput("impactcontactreduction")
+                         withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context.md"))
                 )
             )
         )))
@@ -442,6 +519,13 @@ server <- function(input, output, session) {
         return(writeLines(c("Social Vunerability Score", social())))
     })
     
+    output$ex4 <- renderUI({
+        invalidateLater(5000, session)
+        x <- round(rcauchy(1), 3)
+        withMathJax(sprintf("If \\(X\\) is a Cauchy random variable, then
+                        $$P(X \\leq %.03f ) = %.03f$$", x, pcauchy(x)))
+    })
+    
     
     output$pctcontactreduction <- renderPrint({
         x <- df()$R$Mean
@@ -450,6 +534,8 @@ server <- function(input, output, session) {
         return(writeLines(c("Percentage Reduction of COVID-19 Cases is estimated to be", round(impact_contact_reduction,digits=2), "Percent")))
         # return(, x[length(x)])
     })  
+    
+    
 }
 
 # Create Shiny app ----
