@@ -1,3 +1,4 @@
+### Reference
 #### 1. Population density / Km² `Weigh: 2`
 *Average number of persons who live inside one Km² of a specific neighborhood*  
 $$
@@ -35,7 +36,7 @@ $$
 *- Emergency call center employee*    
 *- Hazardous material responder*    
 *- Janitorial or custodial staffer*     
-*- Workers (including contracted vendors) in food and agriculture, critical manufacturing, informational technology, transportation, energy and government facilities*    
+*- Workers [including contracted vendors] in food and agriculture, critical manufacturing, informational technology, transportation, energy and government facilities*    
 *- Healthcare worker in any capacity*  
 $$
 0=\;\lt10\%
@@ -60,7 +61,7 @@ $$
 $$
 
 #### 5. Proportion of the population who uses public transport `Weigh: 1`
-*Proportion of the population in a specific neighborhood who uses public transportation* (ex., bus, train, taxi, hired motorcycle) *to travel to and from home*  
+*Proportion of the population in a specific neighborhood who uses public transportation [ex., bus, train, taxi, hired motorcycle] to travel to and from home*  
 $$
 0=\;\lt50\% 
 $$ 
@@ -72,7 +73,7 @@ $$
 $$
 
 #### 6. Proportion of persons with pre-existing comorbidities `Weigh: 3`
-*Proportion of the population with one or more of the following conditions (prevalence value in the Americas):*       
+*Proportion of the population with one or more of the following conditions [prevalence value in the Americas]:*       
 *- Chronic lung disease or moderate to severe asthma ≥2%*        
 *- Cardiovascular diseases ≥20%*     
 *- Immuno-compromised ≥1%*  
@@ -112,7 +113,7 @@ $$
 $$
 
 #### 9. Proportion of the population who is stunted `Weigh: 2`
-*Proportion of children younger than 5 who are stunted* (i.e., children who report a height-for-age measurement that is lower than -2 Z-scores from a reference population) *is > 30%*    
+*Proportion of children younger than 5 who are stunted [i.e., children who report a height-for-age measurement that is lower than -2 Z-scores from a reference population] is > 30%*    
 $$
 1=\;\ge30\%
 $$
