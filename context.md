@@ -34,3 +34,25 @@ $$
 2=\;\gt31\%
 $$
 
+#### Proportion of the population working outside the home
+*Proportion of the population within a specific neighborhood who is currently employed and holds a job that cannot be performed from home*  
+Weigh: **1**
+$$
+0=\;\lt10\% \\ 
+1=11\%\text{ to }30\% \\ 
+2=\;\gt31\% 
+$$
+
+#### Proportion of the population who uses public transport
+*Proportion of the population in a specific neighborhood who uses public transportation (ex., bus, train, taxi, hired motorcycle) to travel to and from home*  
+Weigh: **1**
+$$
+0=\;\lt50\% \\ 
+1=51\%\text{ to }65\% \\ 
+2=\;\gt65\% 
+$$
+
+"0 = <50%
+1 = 51% to 65%
+2 = >65%"
+
