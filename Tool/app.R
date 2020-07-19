@@ -153,10 +153,10 @@ ui <- fluidPage(
                                     verbatimTextOutput("stunted09")
                                     )
                          ),
-                         h3("Individual Vunerability Score"),
+                         h4("Individual Vunerability Score"),
                          verbatimTextOutput("context"),
-                         tags$head(tags$style("#context{color: #87ceeb;
-                                 font-size: 15px;
+                         tags$head(tags$style("#context{color: #0085b2;
+                                 font-size: 16px;
                                  }"
                          )),
                          withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context.md"))
@@ -230,9 +230,13 @@ ui <- fluidPage(
                                                 max = 1, value = 0),
                                     verbatimTextOutput("groupq21")
                              )),
-                         h3("Social Vunerability Score"),
+                         h4("Social Vunerability Score"),
                          tags$head(tags$style('h1 {color:red;}')),
                          verbatimTextOutput("context2"),
+                         tags$head(tags$style("#context2{color: #0085b2;
+                                 font-size: 16px;
+                                 }"
+                         )),
                          withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context.md"))
                 )
             )
@@ -731,7 +735,7 @@ server <- function(input, output, session) {
     
     
     output$context <- renderPrint({
-        return(writeLines(c("Individual Vunerability Score", individual())))
+        return(writeLines(as.character(individual())))
     })
     
     individual <- reactive({
@@ -766,7 +770,7 @@ server <- function(input, output, session) {
     })
     
     output$context2 <- renderPrint({
-        return(writeLines(c("Social Vunerability Score", social())))
+        return(writeLines(as.character(social())))
     })
     
     
