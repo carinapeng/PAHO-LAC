@@ -22,7 +22,11 @@ $$
 Weigh: **1**
 $$
 0=\;\gt75\% \\ 
+$$
+$$
 1=50\%\text{ to }75\% \\ 
+$$
+$$
 2=\;\lt50\% 
 $$
 
@@ -38,7 +42,11 @@ $$
 Weigh: **2**
 $$
 0=\;\lt10\%\\
+$$
+$$
 1=11\%\text{ to }30\%\\
+$$
+$$
 2=\;\gt31\%
 $$
 
@@ -46,8 +54,12 @@ $$
 *Proportion of the population within a specific neighborhood who is currently employed and holds a job that cannot be performed from home*  
 Weigh: **1**
 $$
-0=\;\lt10\% \\ 
+0=\;\lt10\%\\   
+$$
+$$
 1=11\%\text{ to }30\% \\ 
+$$
+$$
 2=\;\gt31\% 
 $$
 
@@ -56,7 +68,20 @@ $$
 Weigh: **1**
 $$
 0=\;\lt50\% \\ 
+$$ 
+$$
 1=51\%\text{ to }65\% \\ 
+$$
+$$
 2=\;\gt65\% 
 $$
+
+Population density / Km² | Weigh: 2
+------------- | -------------
+*Average number of persons who live inside one Km² of a specific neighborhood* | $$0=0.03\text{ to }0.90\\$$$$1=0.91\text{ to }2.45\\$$$$2=2.46\text{ to }8.08\\$$$$3=8.09\text{ to }22.50\\$$$$4=\;\ge22.51$$
+
+Availability of water and soap for hand washing inside the home | Weigh: 1
+------------- | -------------
+*Proportion of households in the neighborhood with indoor plumbing* | $$0=\;\gt75\% \\ $$$$1=50\%\text{ to }75\% \\ $$$$2=\;\lt50\% $$
+
 
