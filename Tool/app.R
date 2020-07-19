@@ -153,8 +153,12 @@ ui <- fluidPage(
                                     verbatimTextOutput("stunted09")
                                     )
                          ),
-                         h3("Risk Component: Context"),
+                         h3("Individual Vunerability Score"),
                          verbatimTextOutput("context"),
+                         tags$head(tags$style("#context{color: #87ceeb;
+                                 font-size: 15px;
+                                 }"
+                         )),
                          withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context.md"))
                 ),
                 tabPanel("Social Vunerability Index",
@@ -226,6 +230,8 @@ ui <- fluidPage(
                                                 max = 1, value = 0),
                                     verbatimTextOutput("groupq21")
                              )),
+                         h3("Social Vunerability Score"),
+                         tags$head(tags$style('h1 {color:red;}')),
                          verbatimTextOutput("context2"),
                          withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context.md"))
                 )
@@ -762,7 +768,6 @@ server <- function(input, output, session) {
     output$context2 <- renderPrint({
         return(writeLines(c("Social Vunerability Score", social())))
     })
-    
     
     
 }
