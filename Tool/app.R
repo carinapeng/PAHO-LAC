@@ -162,69 +162,69 @@ ui <- fluidPage(
                          h4("Demographic and Socio-economic Information about the Neighborhood"),
                          fluidRow(
                              column(4,
-                                    sliderInput("pop_dens", label = h4("10. Unemployment"), min = 0, 
+                                    sliderInput("employment", label = h4("10. Unemployment"), min = 0, 
                                                 max = 4, value = 0),
-                                    verbatimTextOutput("pop_dens01")
+                                    verbatimTextOutput("employment10")
                                     
                              ),
                              column(4,
-                                    sliderInput("water", label = h4("11. Per capita income"), min = 0, 
+                                    sliderInput("income", label = h4("11. Per capita income"), min = 0, 
                                                 max = 2, value = 0),
-                                    verbatimTextOutput("water02")
+                                    verbatimTextOutput("income11")
                              ),
                              column(4,
-                                    sliderInput("occupation", label = h4("12. High school diploma"), min = 0, 
+                                    sliderInput("education", label = h4("12. High school diploma"), min = 0, 
                                                 max = 2, value = 0),
-                                    verbatimTextOutput("occupation03")
+                                    verbatimTextOutput("education12")
                              )),
                          fluidRow(
                              column(4,
-                                    sliderInput("workout", label = h4("13. Age 65 or older"), min = 0, 
+                                    sliderInput("edad65", label = h4("13. Age 65 or older"), min = 0, 
                                                 max = 2, value = 0),
-                                    verbatimTextOutput("workout04")
+                                    verbatimTextOutput("edad65_13")
                              ),
                              column(4,
-                                    sliderInput("publictrans", label = h4("14. Age 17 or younger"), min = 0, 
+                                    sliderInput("edad17", label = h4("14. Age 17 or younger"), min = 0, 
                                                 max = 2, value = 0),
-                                    verbatimTextOutput("publictrans05")
+                                    verbatimTextOutput("edad17_14")
                              ),
                              column(4,
-                                    sliderInput("comorbidity", label = h4("15. Disability"), min = 0, 
+                                    sliderInput("disability", label = h4("15. Disability"), min = 0, 
                                                 max = 3, value = 0),
-                                    verbatimTextOutput("comorbidity06")
+                                    verbatimTextOutput("disability15")
                              )),
                          fluidRow(
                              column(4,
-                                    sliderInput("vac_children", label = h4("16. Single parent household"), min = 0, 
+                                    sliderInput("single_house", label = h4("16. Single parent household"), min = 0, 
                                                 max = 1, value = 0),
-                                    verbatimTextOutput("vac_children07")
+                                    verbatimTextOutput("single_house16")
                              ),
                              column(4,
-                                    sliderInput("vac_elder", label = h4("17. Ethinic minority"), min = 0, 
+                                    sliderInput("ethnic", label = h4("17. Ethinic minority"), min = 0, 
                                                 max = 1, value = 0),
-                                    verbatimTextOutput("vac_elder08")
+                                    verbatimTextOutput("ethnic17")
                              ),
                              column(4,
-                                    sliderInput("stunted", label = h4("18. Multi-unit housing"), min = 0, 
+                                    sliderInput("multihouse", label = h4("18. Multi-unit housing"), min = 0, 
                                                 max = 1, value = 0),
-                                    verbatimTextOutput("stunted09")
+                                    verbatimTextOutput("multihouse18")
                              )
                          ),
                          fluidRow(
                              column(4,
-                                    sliderInput("vac_children", label = h4("19. Crowded household"), min = 0, 
+                                    sliderInput("nbpersons", label = h4("19. Crowded household"), min = 0, 
                                                 max = 1, value = 0),
-                                    verbatimTextOutput("vac_children07")
+                                    verbatimTextOutput("nbpersons19")
                              ),
                              column(4,
-                                    sliderInput("vac_elder", label = h4("20. Vehicle availability"), min = 0, 
+                                    sliderInput("vehicle", label = h4("20. Vehicle availability"), min = 0, 
                                                 max = 1, value = 0),
-                                    verbatimTextOutput("vac_elder08")
+                                    verbatimTextOutput("vehicle20")
                              ),
                              column(4,
-                                    sliderInput("stunted", label = h4("21. Group quarters"), min = 0, 
+                                    sliderInput("groupq", label = h4("21. Group quarters"), min = 0, 
                                                 max = 1, value = 0),
-                                    verbatimTextOutput("stunted09")
+                                    verbatimTextOutput("groupq21")
                              )),
                          verbatimTextOutput("context2"),
                          withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context.md"))
@@ -370,6 +370,115 @@ server <- function(input, output, session) {
         }
     })
     
+    contexto10 <- reactive({
+        if (is.null(municipal()$contexto10)) {
+            return(input$employment)
+        }
+        else {
+            return(as.character(municipal()$contexto10))
+        }
+    })
+    
+    contexto11 <- reactive({
+        if (is.null(municipal()$contexto11)) {
+            return(input$income)
+        }
+        else {
+            return(as.character(municipal()$contexto11))
+        }
+    })
+    
+    contexto12 <- reactive({
+        if (is.null(municipal()$contexto12)) {
+            return(input$education)
+        }
+        else {
+            return(as.character(municipal()$contexto12))
+        }
+    })
+    
+    contexto13 <- reactive({
+        if (is.null(municipal()$contexto13)) {
+            return(input$edad65)
+        }
+        else {
+            return(as.character(municipal()$contexto13))
+        }
+    })
+    
+    contexto14 <- reactive({
+        if (is.null(municipal()$contexto14)) {
+            return(input$edad17)
+        }
+        else {
+            return(as.character(municipal()$contexto14))
+        }
+    })
+    
+    contexto15 <- reactive({
+        if (is.null(municipal()$contexto15)) {
+            return(input$disability)
+        }
+        else {
+            return(as.character(municipal()$contexto15))
+        }
+    })
+    
+    contexto16 <- reactive({
+        if (is.null(municipal()$contexto16)) {
+            return(input$single_house)
+        }
+        else {
+            return(as.character(municipal()$contexto16))
+        }
+    })
+    
+    contexto17 <- reactive({
+        if (is.null(municipal()$contexto17)) {
+            return(input$ethnic)
+        }
+        else {
+            return(as.character(municipal()$contexto17))
+        }
+    })
+    
+    contexto18 <- reactive({
+        if (is.null(municipal()$contexto18)) {
+            return(input$multihouse)
+        }
+        else {
+            return(as.character(municipal()$contexto18))
+        }
+    })
+    
+    contexto19 <- reactive({
+        if (is.null(municipal()$contexto19)) {
+            return(input$nbpersons)
+        }
+        else {
+            return(as.character(municipal()$contexto19))
+        }
+    })
+    
+    contexto20 <- reactive({
+        if (is.null(municipal()$contexto20)) {
+            return(input$vehicle)
+        }
+        else {
+            return(as.character(municipal()$contexto20))
+        }
+    })
+    
+    contexto21 <- reactive({
+        if (is.null(municipal()$contexto21)) {
+            return(input$groupq)
+        }
+        else {
+            return(as.character(municipal()$contexto21))
+        }
+    })
+    
+    
     
     # Shows the table for coded csv by selected municipal
     #output$contents <- renderTable({
@@ -480,6 +589,125 @@ server <- function(input, output, session) {
         }
     })
     
+    output$employment10 <- renderPrint({
+        if (is.null(municipal()$contexto10)) {
+            return(writeLines("Please enter value."))
+        }
+        
+        else {
+            return(disable("employment"))
+        }
+    })
+    
+    output$income11 <- renderPrint({
+        if (is.null(municipal()$contexto11)) {
+            return(writeLines("Please enter value."))
+        }
+        
+        else {
+            return(disable("income"))
+        }
+    })
+    
+    output$education12 <- renderPrint({
+        if (is.null(municipal()$contexto12)) {
+            return(writeLines("Please enter value."))
+        }
+        
+        else {
+            return(disable("education"))
+        }
+    })
+    
+    output$edad65_13 <- renderPrint({
+        if (is.null(municipal()$contexto13)) {
+            return(writeLines("Please enter value."))
+        }
+        
+        else {
+            return(disable("edad65"))
+        }
+    })
+    
+    output$edad17_14 <- renderPrint({
+        if (is.null(municipal()$contexto14)) {
+            return(writeLines("Please enter value."))
+        }
+        
+        else {
+            return(disable("edad17"))
+        }
+    })
+    
+    output$disability15 <- renderPrint({
+        if (is.null(municipal()$contexto15)) {
+            return(writeLines("Please enter value."))
+        }
+        
+        else {
+            return(disable("disability"))
+        }
+    })
+    
+    output$single_house15 <- renderPrint({
+        if (is.null(municipal()$contexto16)) {
+            return(writeLines("Please enter value."))
+        }
+        
+        else {
+            return(disable("single_house"))
+        }
+    })
+    
+    output$ethnic17 <- renderPrint({
+        if (is.null(municipal()$contexto17)) {
+            return(writeLines("Please enter value."))
+        }
+        
+        else {
+            return(disable("ethnic"))
+        }
+    })
+    
+    output$multihouse18 <- renderPrint({
+        if (is.null(municipal()$contexto18)) {
+            return(writeLines("Please enter value."))
+        }
+        
+        else {
+            return(disable("multihouse"))
+        }
+    })
+    
+    output$nbpersons19 <- renderPrint({
+        if (is.null(municipal()$contexto19)) {
+            return(writeLines("Please enter value."))
+        }
+        
+        else {
+            return(disable("nbpersons"))
+        }
+    })
+    
+    output$vehicle20 <- renderPrint({
+        if (is.null(municipal()$contexto20)) {
+            return(writeLines("Please enter value."))
+        }
+        
+        else {
+            return(disable("vehicle"))
+        }
+    })
+    
+    output$groupq21 <- renderPrint({
+        if (is.null(municipal()$contexto21)) {
+            return(writeLines("Please enter value."))
+        }
+        
+        else {
+            return(disable("groupq"))
+        }
+    })
 
     individual <- reactive({
         individual_vunerability <- (as.numeric(contexto01())*2 + 
@@ -500,7 +728,19 @@ server <- function(input, output, session) {
         return(writeLines(c("Individual Vunerability Score", individual())))
     })
     
-    
+    individual <- reactive({
+        individual_vunerability <- (as.numeric(contexto01())*2 + 
+                                        as.numeric(contexto02())*1 + 
+                                        as.numeric(contexto03())*1 + 
+                                        as.numeric(contexto04())*1 +
+                                        as.numeric(contexto05())*1 +
+                                        as.numeric(contexto06())*3 +
+                                        as.numeric(contexto07())*2 +
+                                        as.numeric(contexto08())*2 +
+                                        as.numeric(contexto09())*2
+        )
+        return(individual_vunerability)
+    })
     
     social <- reactive({
         social_vunerability <- (municipal()$contexto10*1 + 
@@ -519,21 +759,6 @@ server <- function(input, output, session) {
         return(writeLines(c("Social Vunerability Score", social())))
     })
     
-    output$ex4 <- renderUI({
-        invalidateLater(5000, session)
-        x <- round(rcauchy(1), 3)
-        withMathJax(sprintf("If \\(X\\) is a Cauchy random variable, then
-                        $$P(X \\leq %.03f ) = %.03f$$", x, pcauchy(x)))
-    })
-    
-    
-    output$pctcontactreduction <- renderPrint({
-        x <- df()$R$Mean
-        Rt_observed <- x[length(x)]
-        impact_contact_reduction <- (1 - Rt_observed / (input$R0 * contact()))*100
-        return(writeLines(c("Percentage Reduction of COVID-19 Cases is estimated to be", round(impact_contact_reduction,digits=2), "Percent")))
-        # return(, x[length(x)])
-    })  
     
     
 }
