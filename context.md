@@ -60,7 +60,7 @@ $$
 $$
 
 #### 5. Proportion of the population who uses public transport `Weigh: 1`
-*Proportion of the population in a specific neighborhood who uses public transportation (ex., bus, train, taxi, hired motorcycle) to travel to and from home*  
+*Proportion of the population in a specific neighborhood who uses public transportation* (ex., bus, train, taxi, hired motorcycle) *to travel to and from home*  
 $$
 0=\;\lt50\% 
 $$ 
@@ -112,7 +112,8 @@ $$
 $$
 
 #### 9. Proportion of the population who is stunted `Weigh: 2`
-*Proportion of children younger than 5 who are stunted (i.e., children who report a height-for-age measurement that is lower than -2 Z-scores from a reference population) is > 30%*    
+*Proportion of children younger than 5 who are stunted*   
+*i.e., children who report a height-for-age measurement that is lower than -2 Z-scores from a reference population* *is > 30%*    
 $$
 1=\;\ge30\%
 $$
