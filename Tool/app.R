@@ -102,10 +102,10 @@ ui <- fluidPage(
                          tableOutput("contents")
                 ),
                 tabPanel("Data",
+                         hr(),
                          uiOutput("selectfile"),
-                         selectInput('mydropdown', label = 'Select_municipal', choices = 'No choices here yet'),
-                         uiOutput("selectfile2")
-                         
+                         selectInput('mydropdown', label = 'Select Neighborhood', choices = 'No choices here yet'),
+                         uiOutput("selectfile2")  
                          ),
                 tabPanel("Individual Vunerability Index",
                          h3("Context"),
@@ -246,9 +246,11 @@ ui <- fluidPage(
                          )),
                          withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context.md"))
                 ),
-                tabPanel("Statistics", 
-                         h3("Summary Statistics"),
+                tabPanel("Epidemiology", 
+                         h3("Incidence Rate Statistics"),
                          verbatimTextOutput("contents5"),
+                         plotOutput("plot1"),
+                         plotOutput("plot2"),
                          tableOutput("contents2"))
         ))))
         
@@ -275,8 +277,7 @@ server <- function(input, output, session) {
     output$selectfile <- renderUI({
         if(is.null(input$file1)) {return()}
         list(hr(), 
-             helpText("Select the files for which you need to see data and summary stats"),
-             selectInput("Select_test", "Select_test", choices=input$file1$name)
+             selectInput("Select_test", "Select Census Data", choices=input$file1$name)
         )
         
         
@@ -284,9 +285,8 @@ server <- function(input, output, session) {
     
     output$selectfile2 <- renderUI({
         if(is.null(input$file1)) {return()}
-        list(hr(), 
-             helpText("Select the files for which you need to see data and summary stats"),
-             selectInput("Select_test2", "Select_test2", choices=input$file1$name)
+        list(hr(),
+             selectInput("Select_test2", "Select Incidence Data", choices=input$file1$name)
         )
         
         
@@ -316,7 +316,7 @@ server <- function(input, output, session) {
     })
     
     observeEvent(input$Select_test, {
-        updateSelectInput(session, "mydropdown", label = "Select_municipal", choices = file01()[1])
+        updateSelectInput(session, "mydropdown", label = "Select neighborhood", choices = file01()[1])
     })
     
     municipal <- reactive({
@@ -332,6 +332,14 @@ server <- function(input, output, session) {
         x[,1]<-as.Date(x[,1], "%d/%m/%Y")
         dfR <- estimate_R(x, method = "parametric_si", config = make_config(list(mean_si = 4.8, std_si = 2.3)))
         return(dfR)
+    })
+    
+    
+    output$plot1 <- renderPlot({
+        plot(df(), what=c("incid"))
+    })
+    output$plot2 <- renderPlot({
+        plot(df(), what=c("R"))
     })
     
     contexto01 <- reactive({
