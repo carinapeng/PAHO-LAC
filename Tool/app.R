@@ -25,7 +25,8 @@ library(shinyjs)
 library(knitr)
 library(ggplot2)
 library(incidence)
-#options(shiny.maxRequestSize=2650*1024^2)
+library(readxl)
+options(shiny.maxRequestSize=2650*1024^2)
 
 
 # Define UI for data upload app ----
@@ -42,11 +43,12 @@ ui <- fluidPage(
         sidebarPanel(
             
             # Input: Select a file ----
-            fileInput("file1", "Choose CSV File(s)",
+            fileInput("file1", "Choose CSV Files",
                       multiple = TRUE,
                       accept = c("text/csv",
                                  "text/comma-separated-values,text/plain",
-                                 ".csv")),
+                                 ".csv",
+                                 ".xlsx")),
             # Horizontal line ----
             tags$hr(),
             
@@ -105,7 +107,8 @@ ui <- fluidPage(
                          hr(),
                          uiOutput("selectfile"),
                          selectInput('mydropdown', label = 'Select Neighborhood', choices = 'No choices here yet'),
-                         uiOutput("selectfile2")  
+                         uiOutput("selectfile2"),
+                         uiOutput("selectfile3")
                          ),
                 tabPanel("Individual Vunerability Index",
                          h3("Context"),
@@ -244,10 +247,10 @@ ui <- fluidPage(
                                  font-size: 16px;
                                  }"
                          )),
-                         withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context.md"))
+                         withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context2.md"))
                 ),
                 tabPanel("Epidemiology", 
-                         h3("Incidence Rate Statistics"),
+                         h3("Epidemiology Statistics"),
                          verbatimTextOutput("contents5"),
                          plotOutput("plot1"),
                          plotOutput("plot2"),
@@ -273,6 +276,7 @@ server <- function(input, output, session) {
         #}
         #return(writeLines("Uploaded File"))
     #})
+
     
     output$selectfile <- renderUI({
         if(is.null(input$file1)) {return()}
@@ -287,6 +291,15 @@ server <- function(input, output, session) {
         if(is.null(input$file1)) {return()}
         list(hr(),
              selectInput("Select_test2", "Select Incidence Data", choices=input$file1$name)
+        )
+        
+        
+    })
+    
+    output$selectfile3 <- renderUI({
+        if(is.null(input$file1)) {return()}
+        list(hr(),
+             selectInput("Select_test3", "Select WHO PHSM Data", choices=input$file1$name)
         )
         
         
@@ -313,6 +326,14 @@ server <- function(input, output, session) {
                  header = input$header,
                  sep = input$sep,
                  quote = input$quote)
+    })
+    
+    file03 <- reactive({
+        req(input$file1)
+        read.xlsx(file=input$file1$datapath[input$file1$name==input$Select_test3],
+                   header = input$header,
+                   sep = input$sep,
+                   quote = input$quote)
     })
     
     observeEvent(input$Select_test, {

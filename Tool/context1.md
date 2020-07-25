@@ -1,6 +1,4 @@
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+
 
 #### Population density / Km²
 *Average number of persons who live inside one Km² of a specific neighborhood*  
