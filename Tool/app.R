@@ -107,9 +107,9 @@ ui <- fluidPage(
                          hr(),
                          uiOutput("selectfile"),
                          selectInput('mydropdown', label = 'Select Neighborhood for Census', choices = 'No choices here yet'),
-                         uiOutput("selectfile2"),
-                         uiOutput("selectfile3"),
-                         selectInput('mydropdown_who', label = 'Select Neighborhood for PHSM', choices = 'No choices here yet')
+                         uiOutput("selectfile2")#,
+                         #uiOutput("selectfile3"),
+                         #textInput("phsm", label = "Select Neighborhood from PHSM Dataset", "")
                          ),
                 tabPanel("Individual Vunerability Index",
                          h3("Context"),
@@ -338,23 +338,6 @@ ui <- fluidPage(
         
     
 server <- function(input, output, session) { 
-    
-    # Debug: Error: invalid 'description' argument 
-    #csv <- reactive({
-        #req(input$file1)
-        #read.csv(input$file1$datapath,
-                 #header = input$header,
-                 #sep = input$sep,
-                 #quote = input$quote)
-    #})
-
-    
-    #output$upload <- renderPrint({
-        #if (is.null(csv())) {
-            #return(NULL)
-        #}
-        #return(writeLines("Uploaded File"))
-    #})
 
     
     output$selectfile <- renderUI({
@@ -362,8 +345,6 @@ server <- function(input, output, session) {
         list(hr(), 
              selectInput("Select_test", "Select Census Data", choices=input$file1$name)
         )
-        
-        
     })
     
     output$selectfile2 <- renderUI({
@@ -371,24 +352,19 @@ server <- function(input, output, session) {
         list(hr(),
              selectInput("Select_test2", "Select Incidence Data", choices=input$file1$name)
         )
-        
-        
     })
     
-    output$selectfile3 <- renderUI({
-        if(is.null(input$file1)) {return()}
-        list(hr(),
-             selectInput("Select_test3", "Select WHO PHSM Data", choices=input$file1$name)
-        )
-        
-        
-    })
+    #output$selectfile3 <- renderUI({
+        #if(is.null(input$file1)) {return()}
+        #list(hr(),
+             #selectInput("Select_test3", "Select WHO PHSM Data", choices=input$file1$name)
+        #)
+    #})
     
-    output$table <- renderTable({ 
-        if(is.null(input$file1)){return()}
-        read.table(file=input$file1$datapath[input$file1$name==input$Select])
-        
-    })
+    #output$table <- renderTable({ 
+        #if(is.null(input$file1)){return()}
+        #read.table(file=input$file1$datapath[input$file1$name==input$Select])
+    #})
     
     file01 <- reactive({
         req(input$file1)
@@ -400,20 +376,19 @@ server <- function(input, output, session) {
     
     file02 <- reactive({
         req(input$file1)
-        #read.csv(input$file1[[2, 'datapath']],
         read.csv(file=input$file1$datapath[input$file1$name==input$Select_test2],
                  header = input$header,
                  sep = input$sep,
                  quote = input$quote)
     })
     
-    file03 <- reactive({
-        req(input$file1)
-        read.xlsx(file=input$file1$datapath[input$file1$name==input$Select_test3],
-                   header = input$header,
-                   sep = input$sep,
-                   quote = input$quote)
-    })
+    #file03 <- reactive({
+        #req(input$file1)
+        #read.xlsx(file=input$file1$datapath[input$file1$name==input$Select_test3],
+                   #header = input$header,
+                   #sep = input$sep,
+                   #quote = input$quote)
+    #})
     
     observeEvent(input$Select_test, {
         updateSelectInput(session, "mydropdown", label = "Select neighborhood for census", choices = file01()[1])
@@ -426,11 +401,14 @@ server <- function(input, output, session) {
         return(file01_municipal)
     })
     
-    observeEvent(input$Select_test3, {
-        updateSelectInput(session, "mydropdown_who", label = "Select country for PHSM", choices = file03()[5])
-    })
+    #phsm_municipal <- reactive({
+        #req(input$phsm)
+        #file03_municipal <- file03() %>%
+            #filter(area_covered == input$phsm)
+        #return(file03_municipal)
+    #})
     
-    
+    # EPI - EPI EPSTIM
     df <- reactive({
         req(input$file1)
         x = file02()
