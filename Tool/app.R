@@ -276,12 +276,12 @@ server <- function(input, output, session) {
         )
     })
     
-    #output$selectfile3 <- renderUI({
-        #if(is.null(input$file1)) {return()}
-        #list(hr(),
-             #selectInput("Select_test3", "Select WHO PHSM Data", choices=input$file1$name)
-        #)
-    #})
+    output$selectfile3 <- renderUI({
+        if(is.null(input$file1)) {return()}
+        list(hr(),
+             selectInput("Select_test3", "Select WHO PHSM Data", choices=input$file1$name)
+        )
+    })
     
     #output$table <- renderTable({ 
         #if(is.null(input$file1)){return()}
@@ -304,13 +304,13 @@ server <- function(input, output, session) {
                  quote = input$quote)
     })
     
-    #file03 <- reactive({
-        #req(input$file1)
-        #read.xlsx(file=input$file1$datapath[input$file1$name==input$Select_test3],
-                   #header = input$header,
-                   #sep = input$sep,
-                   #quote = input$quote)
-    #})
+    file03 <- reactive({
+        req(input$file1)
+        read.xlsx(file=input$file1$datapath[input$file1$name==input$Select_test3],
+                   header = input$header,
+                   sep = input$sep,
+                   quote = input$quote)
+    })
     
     observeEvent(input$Select_test, {
         updateSelectInput(session, "mydropdown", label = "Select neighborhood", choices = file01()[1])
