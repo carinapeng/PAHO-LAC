@@ -106,16 +106,10 @@ ui <- fluidPage(
                 tabPanel("Data",
                          hr(),
                          uiOutput("selectfile"),
-<<<<<<< HEAD
-                         selectInput('mydropdown', label = 'Select Neighborhood for Census', choices = 'No choices here yet'),
-                         uiOutput("selectfile2")#,
-                         #uiOutput("selectfile3"),
-                         #textInput("phsm", label = "Select Neighborhood from PHSM Dataset", "")
-=======
                          selectInput('mydropdown', label = 'Select Neighborhood', choices = 'No choices here yet'),
                          uiOutput("selectfile2"),
                          uiOutput("selectfile3")
->>>>>>> parent of 763ef62... Create mitigation page and dropdown
+
                          ),
                 tabPanel("Individual Vunerability Index",
                          h3("Context"),
@@ -329,17 +323,6 @@ server <- function(input, output, session) {
         return(file01_municipal)
     })
     
-<<<<<<< HEAD
-    #phsm_municipal <- reactive({
-        #req(input$phsm)
-        #file03_municipal <- file03() %>%
-            #filter(area_covered == input$phsm)
-        #return(file03_municipal)
-    #})
-    
-    # EPI - EPI EPSTIM
-=======
->>>>>>> parent of 763ef62... Create mitigation page and dropdown
     df <- reactive({
         req(input$file1)
         x = file02()
