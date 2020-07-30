@@ -47,8 +47,7 @@ ui <- fluidPage(
                       multiple = TRUE,
                       accept = c("text/csv",
                                  "text/comma-separated-values,text/plain",
-                                 ".csv",
-                                 ".xlsx")),
+                                 ".csv")),
             # Horizontal line ----
             tags$hr(),
             
@@ -249,7 +248,10 @@ ui <- fluidPage(
                          )),
                          withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context2.md"))
                 ),
-                
+                tabPanel("Mitigation",
+                         h3("HEALTHCARE SYSTEMS TO TEST AND TREAT COVID-19 CASES - To be updated each month"),
+                         tableOutput("phsm_table_test")
+                         ),
                 tabPanel("Epidemiology", 
                          h3("Epidemiology Statistics"),
                          verbatimTextOutput("contents5"),
@@ -303,7 +305,7 @@ server <- function(input, output, session) {
     
     file03 <- reactive({
         req(input$file1)
-        read.xlsx(file=input$file1$datapath[input$file1$name==input$Select_test3],
+        read.csv(file=input$file1$datapath[input$file1$name==input$Select_test3],
                    header = input$header,
                    sep = input$sep,
                    quote = input$quote)
@@ -326,6 +328,12 @@ server <- function(input, output, session) {
         file03_municipal <- file03() %>%
             filter(area_covered == input$phsm)
         return(file03_municipal)
+    })
+    
+    # Shows the table for filtered PHSM excel with selected municipal
+    output$phsm_table_test <- renderTable({
+        req(input$phsm)
+        return(phsm_municipal())
     })
     
     df <- reactive({
