@@ -106,10 +106,16 @@ ui <- fluidPage(
                 tabPanel("Data",
                          hr(),
                          uiOutput("selectfile"),
+<<<<<<< HEAD
                          selectInput('mydropdown', label = 'Select Neighborhood for Census', choices = 'No choices here yet'),
                          uiOutput("selectfile2")#,
                          #uiOutput("selectfile3"),
                          #textInput("phsm", label = "Select Neighborhood from PHSM Dataset", "")
+=======
+                         selectInput('mydropdown', label = 'Select Neighborhood', choices = 'No choices here yet'),
+                         uiOutput("selectfile2"),
+                         uiOutput("selectfile3")
+>>>>>>> parent of 763ef62... Create mitigation page and dropdown
                          ),
                 tabPanel("Individual Vunerability Index",
                          h3("Context"),
@@ -255,85 +261,7 @@ ui <- fluidPage(
                          verbatimTextOutput("contents5"),
                          plotOutput("plot1"),
                          plotOutput("plot2"),
-                         tableOutput("contents2")),
-                tabPanel("Mitigation",
-                         h3("Public Health AND SOCIAL MEASURES THAT HAVE BEEN PLANNED AND IMPLEMENTED IN THE NEIGHBORHOOD TO DATE"),
-                         h6("To be updated each month"),
-                         fluidRow(
-                             column(4,
-                                    sliderInput("employment", label = h4("10. Unemployment"), min = 0, 
-                                                max = 4, value = 0),
-                                    verbatimTextOutput("employment10")
-                                    
-                             ),
-                             column(4,
-                                    sliderInput("income", label = h4("11. Per capita income"), min = 0, 
-                                                max = 2, value = 0),
-                                    verbatimTextOutput("income11")
-                             ),
-                             column(4,
-                                    sliderInput("education", label = h4("12. High school diploma"), min = 0, 
-                                                max = 2, value = 0),
-                                    verbatimTextOutput("education12")
-                             )),
-                         fluidRow(
-                             column(4,
-                                    sliderInput("edad65", label = h4("13. Age 65 or older"), min = 0, 
-                                                max = 2, value = 0),
-                                    verbatimTextOutput("edad65_13")
-                             ),
-                             column(4,
-                                    sliderInput("edad17", label = h4("14. Age 17 or younger"), min = 0, 
-                                                max = 2, value = 0),
-                                    verbatimTextOutput("edad17_14")
-                             ),
-                             column(4,
-                                    sliderInput("disability", label = h4("15. Disability"), min = 0, 
-                                                max = 3, value = 0),
-                                    verbatimTextOutput("disability15")
-                             )),
-                         fluidRow(
-                             column(4,
-                                    sliderInput("single_house", label = h4("16. Single parent household"), min = 0, 
-                                                max = 1, value = 0),
-                                    verbatimTextOutput("single_house16")
-                             ),
-                             column(4,
-                                    sliderInput("ethnic", label = h4("17. Ethinic minority"), min = 0, 
-                                                max = 1, value = 0),
-                                    verbatimTextOutput("ethnic17")
-                             ),
-                             column(4,
-                                    sliderInput("multihouse", label = h4("18. Multi-unit housing"), min = 0, 
-                                                max = 1, value = 0),
-                                    verbatimTextOutput("multihouse18")
-                             )
-                         ),
-                         fluidRow(
-                             column(4,
-                                    sliderInput("nbpersons", label = h4("19. Crowded household"), min = 0, 
-                                                max = 1, value = 0),
-                                    verbatimTextOutput("nbpersons19")
-                             ),
-                             column(4,
-                                    sliderInput("vehicle", label = h4("20. Vehicle availability"), min = 0, 
-                                                max = 1, value = 0),
-                                    verbatimTextOutput("vehicle20")
-                             ),
-                             column(4,
-                                    sliderInput("groupq", label = h4("21. Group quarters"), min = 0, 
-                                                max = 1, value = 0),
-                                    verbatimTextOutput("groupq21")
-                             )),
-                         h4("Social Vunerability Score"),
-                         tags$head(tags$style('h1 {color:red;}')),
-                         verbatimTextOutput("context2"),
-                         tags$head(tags$style("#context2{color: #0085b2;
-                                 font-size: 16px;
-                                 }"
-                         )),
-                         withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context2.md"))
-                )
+                         tableOutput("contents2"))
         ))))
         
     
@@ -391,7 +319,7 @@ server <- function(input, output, session) {
     #})
     
     observeEvent(input$Select_test, {
-        updateSelectInput(session, "mydropdown", label = "Select neighborhood for census", choices = file01()[1])
+        updateSelectInput(session, "mydropdown", label = "Select neighborhood", choices = file01()[1])
     })
     
     municipal <- reactive({
@@ -401,6 +329,7 @@ server <- function(input, output, session) {
         return(file01_municipal)
     })
     
+<<<<<<< HEAD
     #phsm_municipal <- reactive({
         #req(input$phsm)
         #file03_municipal <- file03() %>%
@@ -409,6 +338,8 @@ server <- function(input, output, session) {
     #})
     
     # EPI - EPI EPSTIM
+=======
+>>>>>>> parent of 763ef62... Create mitigation page and dropdown
     df <- reactive({
         req(input$file1)
         x = file02()
@@ -416,6 +347,7 @@ server <- function(input, output, session) {
         dfR <- estimate_R(x, method = "parametric_si", config = make_config(list(mean_si = 4.8, std_si = 2.3)))
         return(dfR)
     })
+    
     
     output$plot1 <- renderPlot({
         plot(df(), what=c("incid"))
