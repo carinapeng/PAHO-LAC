@@ -25,6 +25,7 @@ library(shinyjs)
 library(knitr)
 library(ggplot2)
 library(incidence)
+library(data.table)
 options(shiny.maxRequestSize=2650*1024^2)
 
 
@@ -250,6 +251,9 @@ ui <- fluidPage(
                 ),
                 tabPanel("Mitigation",
                          h3("HEALTHCARE SYSTEMS TO TEST AND TREAT COVID-19 CASES - To be updated each month"),
+                         sliderInput("social_dist", label = h4("16. Physical and social distancing and movement measures in place"), min = 0, 
+                                     max = 2, value = 0),
+                         verbatimTextOutput("social_dist16"),
                          tableOutput("phsm_table_test")
                          ),
                 tabPanel("Epidemiology", 
@@ -332,7 +336,20 @@ server <- function(input, output, session) {
         file03_municipal2 <- file03() %>%
              filter(area_covered == input$phsm_area)
         file03_municipal <- rbind(file03_municipal1, file03_municipal2)
-        return(file03_municipal)
+        
+        social = ifelse("Social and physical distancing measures" %in% x$who_category, 0, 1)
+        isolation = ifelse("Surveillance and response measures" %in% x$who_category, 0, 1)
+        support = ifelse("Social and physical distancing measures" %in% x$who_category, 0, 1)
+        contact = ifelse("Tracing and quarantining contacts" %in% x$who_subcategory, 0, 1)
+        gathering = ifelse("Gatherings, businesses and services" %in% x$who_subcategory, 0, 1)
+        disturbance = ifelse("Gatherings, businesses and services" %in% x$who_subcategory, 0, 1)
+        
+        combined <- data.frame(value = rbind(social, isolation, support, contact, gathering, disturbance))
+        combined_transpose <- data.frame(transpose(combined))
+        rownames(combined_transpose) <- colnames(combined)
+        colnames(combined_transpose) <- rownames(combined)
+        
+        return(combined_transpose)
     })
     
     # TEST - Show the table for filtered PHSM excel with selected municipal
@@ -777,6 +794,18 @@ server <- function(input, output, session) {
             return(disable("groupq"))
         }
     })
+    #is.null(my_list[["numbers"]]) 
+    # MITIGATION
+    
+    #output$social_dist16 <- renderPrint({
+        #if (!is.null(phsm_municipal()$who_category[["Social and physical distancing measures"]])) {
+            #return(writeLines("0 = Yes, 2 = No"))
+        #}
+        
+        #else {
+            #return(disable("social_dist"))
+        #}
+    #})
 
     individual <- reactive({
         individual_vunerability <- (as.numeric(contexto01())*2 + 
