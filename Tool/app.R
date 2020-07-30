@@ -25,7 +25,6 @@ library(shinyjs)
 library(knitr)
 library(ggplot2)
 library(incidence)
-library(readxl)
 options(shiny.maxRequestSize=2650*1024^2)
 
 
@@ -108,7 +107,8 @@ ui <- fluidPage(
                          selectInput('mydropdown', label = 'Select Neighborhood', choices = 'No choices here yet'),
                          uiOutput("selectfile2"),
                          uiOutput("selectfile3"),
-                         textInput("phsm", label = "Select Neighborhood from PHSM Dataset", "")),
+                         textInput("phsm_country", label = "Type Country Name from PHSM Dataset", ""),
+                         textInput("phsm_area", label = "Type Neighborhood Name from PHSM Dataset", "")),
                 tabPanel("Individual Vunerability Index",
                          h3("Context"),
                          h4("Demographic and Socio-economic Information about the Neighborhood"),
@@ -324,15 +324,21 @@ server <- function(input, output, session) {
     })
     
     phsm_municipal <- reactive({
-        req(input$phsm)
-        file03_municipal <- file03() %>%
-            filter(area_covered == input$phsm)
+        req(input$phsm_country)
+        req(input$phsm_area)
+        file03_municipal1 <- file03() %>%
+            filter(country_territory_area == input$phsm_country) %>%
+            filter(admin_level == "national")
+        file03_municipal2 <- file03() %>%
+             filter(area_covered == input$phsm_area)
+        file03_municipal <- rbind(file03_municipal1, file03_municipal2)
         return(file03_municipal)
     })
     
-    # Shows the table for filtered PHSM excel with selected municipal
+    # TEST - Show the table for filtered PHSM excel with selected municipal
     output$phsm_table_test <- renderTable({
-        req(input$phsm)
+        req(input$phsm_country)
+        req(input$phsm_area)
         return(phsm_municipal())
     })
     
