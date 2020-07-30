@@ -250,6 +250,106 @@ ui <- fluidPage(
                          )),
                          withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context2.md"))
                 ),
+                tabPanel("Mitigation",
+                         h3("HEALTHCARE SYSTEMS TO TEST AND TREAT COVID-19 CASES - To be updated each month"),
+                         h4("Measures of transmission"),
+                         fluidRow(
+                             column(3,
+                                    sliderInput("employment", label = h4("10. Unemployment"), min = 0, 
+                                                max = 4, value = 0),
+                                    verbatimTextOutput("employment10")
+                                    
+                             ),
+                             column(3,
+                                    sliderInput("income", label = h4("11. Per capita income"), min = 0, 
+                                                max = 2, value = 0),
+                                    verbatimTextOutput("income11")
+                             ),
+                             column(3,
+                                    sliderInput("education", label = h4("12. High school diploma"), min = 0, 
+                                                max = 2, value = 0),
+                                    verbatimTextOutput("education12")),
+                             column(3,
+                                    sliderInput("education", label = h4("12. High school diploma"), min = 0, 
+                                                max = 2, value = 0),
+                                    verbatimTextOutput("education12"))),
+                         h4("Transmission Score"),
+                         tags$head(tags$style('h1 {color:red;}')),
+                         # CHANGE THIS
+                         verbatimTextOutput("context2"),
+                         tags$head(tags$style("#context2{color: #0085b2;
+                                 font-size: 16px;
+                                 }"
+                         )),
+                         fluidRow(
+                             column(4,
+                                    sliderInput("edad65", label = h4("13. Age 65 or older"), min = 0, 
+                                                max = 2, value = 0),
+                                    verbatimTextOutput("edad65_13")
+                             ),
+                             column(4,
+                                    sliderInput("edad17", label = h4("14. Age 17 or younger"), min = 0, 
+                                                max = 2, value = 0),
+                                    verbatimTextOutput("edad17_14")
+                             ),
+                             column(4,
+                                    sliderInput("disability", label = h4("15. Disability"), min = 0, 
+                                                max = 3, value = 0),
+                                    verbatimTextOutput("disability15")
+                             )),
+                         fluidRow(
+                             column(4,
+                                    sliderInput("single_house", label = h4("16. Single parent household"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("single_house16")
+                             ),
+                             column(4,
+                                    sliderInput("ethnic", label = h4("17. Ethinic minority"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("ethnic17")
+                             ),
+                             column(4,
+                                    sliderInput("multihouse", label = h4("18. Multi-unit housing"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("multihouse18")
+                             )
+                         ),
+                         fluidRow(
+                             column(4,
+                                    sliderInput("nbpersons", label = h4("19. Crowded household"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("nbpersons19")
+                             ),
+                             column(4,
+                                    sliderInput("vehicle", label = h4("20. Vehicle availability"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("vehicle20")
+                             ),
+                             column(4,
+                                    sliderInput("groupq", label = h4("21. Group quarters"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("groupq21")
+                             )),
+                         fluidRow(
+                             column(4,
+                                    sliderInput("nbpersons", label = h4("19. Crowded household"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("nbpersons19")
+                             ),
+                             column(4,
+                                    sliderInput("vehicle", label = h4("20. Vehicle availability"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("vehicle20")
+                             )),
+                         h4("Mortality Score"),
+                         tags$head(tags$style('h1 {color:red;}')),
+                         verbatimTextOutput("context2"),
+                         tags$head(tags$style("#context2{color: #0085b2;
+                                 font-size: 16px;
+                                 }"
+                         )),
+                         withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context2.md"))
+                ),
                 tabPanel("Epidemiology", 
                          h3("Epidemiology Statistics"),
                          verbatimTextOutput("contents5"),
@@ -283,10 +383,6 @@ server <- function(input, output, session) {
         )
     })
     
-    #output$table <- renderTable({ 
-        #if(is.null(input$file1)){return()}
-        #read.table(file=input$file1$datapath[input$file1$name==input$Select])
-    #})
     
     file01 <- reactive({
         req(input$file1)
