@@ -118,50 +118,50 @@ ui <- fluidPage(
                          fluidRow(
                              column(4,
                                     sliderInput("pop_dens", label = h4("1. Population density / Km²"), min = 0, 
-                                                max = 25, value = 0),
+                                                max = 25, value = 0, step = 0.1),
                                     verbatimTextOutput("pop_dens01")#,
                                     #verbatimTextOutput("testing")
                                     ),
                              column(4,
                                     sliderInput("water", label = h4("2. Availability of water and soap for hand washing inside the home"), min = 0, 
-                                                max = 2, value = 0),
+                                                max = 100, value = 0),
                                     verbatimTextOutput("water02")
                                     ),
                              column(4,
                                     sliderInput("occupation", label = h4("3. Proportion of the population who is staffing an essential worker position"), min = 0, 
-                                                max = 2, value = 0),
+                                                max = 70, value = 0),
                                     verbatimTextOutput("occupation03")
                                     )),
                          fluidRow(
                              column(4,
                                     sliderInput("workout", label = h4("4. Proportion of the population working outside the home"), min = 0, 
-                                                max = 2, value = 0),
+                                                max = 70, value = 0),
                                     verbatimTextOutput("workout04")
                                     ),
                              column(4,
-                                    sliderInput("publictrans", label = h4("5. Proportion of the population who uses public transport"), min = 0, 
-                                                max = 2, value = 0),
+                                    sliderInput("publictrans", label = h4("5. Proportion of the population who uses public transport"), min = 10, 
+                                                max = 100, value = 0),
                                     verbatimTextOutput("publictrans05")
                                     ),
                              column(4,
                                     sliderInput("comorbidity", label = h4("6. Proportion of persons with pre-existing comorbidities"), min = 0, 
-                                                max = 3, value = 0),
+                                                max = 3, value = 0, step = 1),
                                     verbatimTextOutput("comorbidity06")
                                     )),
                          fluidRow(
                              column(4,
                                     sliderInput("vac_children", label = h4("7. Under- or non-vaccinated population: children younger than 1"), min = 0, 
-                                                max = 1, value = 0),
+                                                max = 1, value = 0, step = 1),
                                     verbatimTextOutput("vac_children07")
                                     ),
                              column(4,
                                     sliderInput("vac_elder", label = h4("8. Under- or non-vaccinated population: persons age 60 or older"), min = 0, 
-                                                max = 1, value = 0),
+                                                max = 1, value = 0, step = 1),
                                     verbatimTextOutput("vac_elder08")
                              ),
                              column(4,
                                     sliderInput("stunted", label = h4("9. Proportion of the population who is stunted"), min = 0, 
-                                                max = 1, value = 0),
+                                                max = 100, value = 0),
                                     verbatimTextOutput("stunted09")
                                     )
                          ),
@@ -179,50 +179,50 @@ ui <- fluidPage(
                          fluidRow(
                              column(4,
                                     sliderInput("employment", label = h4("10. Unemployment"), min = 0, 
-                                                max = 4, value = 0),
+                                                max = 1, value = 0, step = 1),
                                     verbatimTextOutput("employment10")
                                     
                              ),
                              column(4,
                                     sliderInput("income", label = h4("11. Per capita income"), min = 0, 
-                                                max = 2, value = 0),
+                                                max = 1, value = 0, step = 1),
                                     verbatimTextOutput("income11")
                              ),
                              column(4,
                                     sliderInput("education", label = h4("12. High school diploma"), min = 0, 
-                                                max = 2, value = 0),
+                                                max = 1, value = 0, step = 1),
                                     verbatimTextOutput("education12")
                              )),
                          fluidRow(
                              column(4,
                                     sliderInput("edad65", label = h4("13. Age 65 or older"), min = 0, 
-                                                max = 2, value = 0),
+                                                max = 1, value = 0, step = 1),
                                     verbatimTextOutput("edad65_13")
                              ),
                              column(4,
                                     sliderInput("edad17", label = h4("14. Age 17 or younger"), min = 0, 
-                                                max = 2, value = 0),
+                                                max = 1, value = 0, step = 1),
                                     verbatimTextOutput("edad17_14")
                              ),
                              column(4,
                                     sliderInput("disability", label = h4("15. Disability"), min = 0, 
-                                                max = 3, value = 0),
+                                                max = 1, value = 0, step = 1),
                                     verbatimTextOutput("disability15")
                              )),
                          fluidRow(
                              column(4,
                                     sliderInput("single_house", label = h4("16. Single parent household"), min = 0, 
-                                                max = 1, value = 0),
+                                                max = 1, value = 0, step = 1),
                                     verbatimTextOutput("single_house16")
                              ),
                              column(4,
                                     sliderInput("ethnic", label = h4("17. Ethinic minority"), min = 0, 
-                                                max = 1, value = 0),
+                                                max = 1, value = 0, step = 1),
                                     verbatimTextOutput("ethnic17")
                              ),
                              column(4,
                                     sliderInput("multihouse", label = h4("18. Multi-unit housing"), min = 0, 
-                                                max = 1, value = 0),
+                                                max = 1, value = 0, step = 1),
                                     verbatimTextOutput("multihouse18")
                              )
                          ),
@@ -251,6 +251,35 @@ ui <- fluidPage(
                          )),
                          withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context2.md"))
                 ),
+                tabPanel("Epidemiology", 
+                         h3("Epidemiology Statistics"),
+                         verbatimTextOutput("contents5"),
+                         plotOutput("plot1"),
+                         plotOutput("plot2"),
+                         h4("Measure of Mortality"),
+                         fluidRow(
+                             column(4,
+                                    sliderInput("case_mort", label = h4("9. Case mortality rate "), min = 0, 
+                                                max = 1, value = 0, step = 1),
+                                    verbatimTextOutput("case_mort9")
+                             ),
+                             column(4,
+                                    sliderInput("case_men", label = h4("10. Case lethality rate among men"), min = 0, 
+                                                max = 1, value = 0, step = 1),
+                                    verbatimTextOutput("case_men10")
+                             ),
+                             column(4,
+                                    sliderInput("case_elder", label = h4("11. Case lethality rate among the elderly"), min = 0, 
+                                                max = 1, value = 0, step = 1),
+                                    verbatimTextOutput("case_elder11")
+                             ),
+                             column(4,
+                                    sliderInput("excess_death", label = h4("12. Number of excess deaths compared to 2015-2019"), min = 0, 
+                                                max = 1, value = 0, step = 1),
+                                    verbatimTextOutput("excess_death12")
+                             )
+                         )
+                ),
                 tabPanel("Mitigation",
                          h3("HEALTHCARE SYSTEMS TO TEST AND TREAT COVID-19 CASES - To be updated each month"),
                          #sliderTextInput(inputId = "social_dist", label = "16. Physical and social distancing and movement measures in place", grid = TRUE, force_edges = TRUE,
@@ -267,12 +296,12 @@ ui <- fluidPage(
                          fluidRow(
                              column(4,
                                     sliderInput("speed", label = h4("19. Speed of isolation for new cases"), min = 0, 
-                                                max = 1, value = 0),
+                                                max = 100, value = 0, step = 1),
                                     verbatimTextOutput("speed19")
                              ),
                              column(4,
                                     sliderInput("case_qtine", label = h4("20. Proportion of cases identified among quarantined persons"), min = 0, 
-                                                max = 1, value = 0),
+                                                max = 100, value = 0, step = 1),
                                     verbatimTextOutput("case_qtine20")
                              ),
                              column(4, h4("21. Implementation of contact tracing"),
@@ -281,12 +310,12 @@ ui <- fluidPage(
                          fluidRow(
                              column(4,
                                     sliderInput("case_contact", label = h4("22. Proportion of cases identified from a contact list"), min = 0, 
-                                                max = 1, value = 0),
+                                                max = 100, value = 0, step = 1),
                                     verbatimTextOutput("case_contact22")
                              ),
                              column(4,
                                     sliderInput("prop_test", label = h4("23. Proportion of persons tested for every new COVID-19 case detected, in the last week"), min = 0, 
-                                                max = 1, value = 0),
+                                                max = 1, value = 0, step = 1),
                                     verbatimTextOutput("prop_test20")
                              ),
                              
@@ -300,11 +329,12 @@ ui <- fluidPage(
                                  verbatimTextOutput("disturbance25")
                              ),
                              column(4,
-                                 sliderInput("prop_adhere", label = h4("26. Proportion of the population who adheres to mitigation measures"), min = 0, max = 1, value = 0),
+                                 sliderInput("prop_adhere", label = h4("26. Proportion of the population who adheres to mitigation measures"), min = 0, 
+                                             max = 100, value = 0, step = 1),
                                  verbatimTextOutput("prop_adhere26")
                              )
                 ), 
-                         tableOutput("phsm_table_test"),
+                         #tableOutput("phsm_table_test"),
                          h4("Public Health and Social Measures Score"),
                 tags$head(tags$style('h1 {color:red;}')),
                 verbatimTextOutput("miti3"),
@@ -313,57 +343,43 @@ ui <- fluidPage(
                                  }"
                 ))
             ),
-            tabPanel("Epidemiology", 
-                     h3("Epidemiology Statistics"),
-                     verbatimTextOutput("contents5"),
-                     plotOutput("plot1"),
-                     plotOutput("plot2"),
-                     h4("Measure of Mortality"),
-                     fluidRow(
-                         column(4,
-                                sliderInput("case_mort", label = h4("9. Case mortality rate "), min = 0, 
-                                            max = 1, value = 0),
-                                verbatimTextOutput("case_mort9")
-                         ),
-                         column(4,
-                                sliderInput("case_men", label = h4("10. Case lethality rate among men"), min = 0, 
-                                            max = 1, value = 0),
-                                verbatimTextOutput("case_men10")
-                         ),
-                         column(4,
-                                sliderInput("case_elder", label = h4("11. Case lethality rate among the elderly"), min = 0, 
-                                            max = 1, value = 0),
-                                verbatimTextOutput("case_elder11")
-                         ),
-                         column(4,
-                                sliderInput("excess_death", label = h4("12. Number of excess deaths compared to 2015-2019"), min = 0, 
-                                            max = 1, value = 0),
-                                verbatimTextOutput("excess_death12")
-                         )
-                     )
-                     ),
             tabPanel("Score",
                      h3("Scores & Interpretation"),
-                     tableOutput("tbl"),
                      fluidRow(
-                         column(5,
-                                h4("Vunerability Score"),
-                                tags$head(tags$style('h1 {color:red;}')),
-                                verbatimTextOutput("final_vun"),
-                                tags$head(tags$style("#final_vun{color: #0085b2;
+                        column(5,
+                               h4("Composite Scores"),
+                               tableOutput("tbl")
+                        ),
+                        column(5,
+                               h4("Vunerability Score"),
+                               tags$head(tags$style('h1 {color:red;}')),
+                               verbatimTextOutput("final_vun_output"),
+                               tags$head(tags$style("#final_vun_output{color: #0085b2;
                                  font-size: 16px;
                                  }"
-                                ))),
-                         column(5,
-                                h4("Mitigation Score"),
-                                tags$head(tags$style('h1 {color:red;}')),
-                                verbatimTextOutput("final_miti"),
-                                tags$head(tags$style("#final_miti{color: #0085b2;
+                               )),
+                               verbatimTextOutput("final_vun_text"),
+                               tags$head(tags$style("#final_vun_text{color: #0085b2;
                                  font-size: 16px;
                                  }"
-                                )))
+                               ))
+                               ),
+                        column(5,
+                               h4("Mitigation Score"),
+                               tags$head(tags$style('h1 {color:red;}')),
+                               verbatimTextOutput("final_miti"),
+                               tags$head(tags$style("#final_miti{color: #0085b2;
+                                 font-size: 16px;
+                                 }"
+                               )),
+                               verbatimTextOutput("final_miti_text"),
+                               tags$head(tags$style("#final_miti_text{color: #0085b2;
+                                 font-size: 16px;
+                                 }"
+                               ))
+                               ),
                      ),
-                     tags$img(src = "matrix1.png", height = 200, width = 400),
+                     #tags$img(src = "matrix1.png", height = 200, width = 400),
                      tags$img(src = "matrix2.png", height = 400, width = 450))
         ))))
         
@@ -457,11 +473,11 @@ server <- function(input, output, session) {
 
     
     # TEST - Show the table for filtered PHSM excel with selected municipal
-    output$phsm_table_test <- renderTable({
-        req(input$phsm_country)
-        req(input$phsm_area)
-        return(phsm_municipal())
-    })
+    #output$phsm_table_test <- renderTable({
+        #req(input$phsm_country)
+        #req(input$phsm_area)
+        #return(phsm_municipal())
+    #})
     
     df <- reactive({
         req(input$file1)
@@ -505,21 +521,54 @@ server <- function(input, output, session) {
         }
     })
     
+    water_coded <- reactive({
+        req(input$water)
+        if (input$water>75) {
+            return(0)
+        } else if (input$water>=50&input$water<=75) {
+            return(1)
+        } else if (input$water<50) {
+            return(2)
+        }
+    })
+    
     contexto02 <- reactive({
         if (is.null(municipal()$contexto02)) {
-            return(input$water)
+            return(water_coded())
         }
         else {
             return(as.character(municipal()$contexto02))
         }
     })
     
+    occupation_coded <- reactive({
+        req(input$occupation)
+        if (input$occupation<=10) {
+            return(0)
+        } else if (input$occupation>=11&input$occupation<=30) {
+            return(1)
+        } else if (input$occupation>=31) {
+            return(2)
+        }
+    })
+    
     contexto03 <- reactive({
         if (is.null(municipal()$contexto03)) {
-            return(input$occupation)
+            return(occupation_coded())
         }
         else {
             return(as.character(municipal()$contexto03))
+        }
+    })
+    
+    workout_coded <- reactive({
+        req(input$workout)
+        if (input$workout<=10) {
+            return(0)
+        } else if (input$workout>=11&input$workout<=30) {
+            return(1)
+        } else if (input$workout>=31) {
+            return(2)
         }
     })
     
@@ -532,9 +581,20 @@ server <- function(input, output, session) {
         }
     })
     
+    publictrans_coded <- reactive({
+        req(input$publictrans)
+        if (input$publictrans<50) {
+            return(0)
+        } else if (input$publictrans>=51&input$publictrans<=65) {
+            return(1)
+        } else if (input$publictrans>=65) {
+            return(2)
+        }
+    })
+    
     contexto05 <- reactive({
         if (is.null(municipal()$contexto05)) {
-            return(input$publictrans)
+            return(publictrans_coded())
         }
         else {
             return(as.character(municipal()$contexto05))
@@ -568,9 +628,18 @@ server <- function(input, output, session) {
         }
     })
     
+    stunted_coded <- reactive({
+        req(input$stunted)
+        if (input$stunted<30) {
+            return(0)
+        } else if (input$stunted>=31) {
+            return(1)
+        }
+    })
+    
     contexto09 <- reactive({
         if (is.null(municipal()$contexto09)) {
-            return(input$stunted)
+            return(stunted_coded())
         }
         else {
             return(as.character(municipal()$contexto09))
@@ -932,12 +1001,45 @@ server <- function(input, output, session) {
         }
     })
     
+    speed_coded <- reactive({
+        req(input$speed)
+        if (input$speed >= 80) {
+            return(0)
+        } else if (input$speed >= 50&input$speed <= 79) {
+            return(1)
+        } else if (input$speed <= 50) {
+            return(2)
+        }
+    })
+    
+    case_qtine_coded <- reactive({
+        req(input$case_qtine)
+        if (input$case_qtine >= 80) {
+            return(0)
+        } else if (input$case_qtine >= 50&input$case_qtine <= 79) {
+            return(1)
+        } else if (input$case_qtine <= 50) {
+            return(2)
+        }
+    })
+    
     output$contact_tracing21 <- renderPrint({
         if (phsm_municipal()$contact == 0) {
             return(writeLines("Yes"))
         }
         else{
             return(writeLines("No"))
+        }
+    })
+    
+    case_contact_coded <- reactive({
+        req(input$case_contact)
+        if (input$case_contact >= 80) {
+            return(0)
+        } else if (input$case_contact >= 50&input$case_contact <= 79) {
+            return(1)
+        } else if (input$case_contact <= 50) {
+            return(2)
         }
     })
     
@@ -956,6 +1058,17 @@ server <- function(input, output, session) {
         }
         else{
             return(writeLines("No"))
+        }
+    })
+    
+    prop_adhere_coded <- reactive({
+        req(input$prop_adhere)
+        if (input$prop_adhere > 75) {
+            return(0)
+        } else if (input$prop_adhere >= 51&input$prop_adhere <= 75) {
+            return(1)
+        } else if (input$prop_adhere < 50) {
+            return(2)
         }
     })
 
@@ -1017,14 +1130,14 @@ server <- function(input, output, session) {
         public_health_measures <- (as.numeric(phsm_municipal()$social)*3 +
                                        as.numeric(phsm_municipal()$isolation)*3 +
                                        as.numeric(phsm_municipal()$support)*3 +
-                                       as.numeric(input$speed)*3 +
-                                       as.numeric(input$case_qtine)*3 +
+                                       as.numeric(speed_coded())*3 +
+                                       as.numeric(case_qtine_coded())*3 +
                                        as.numeric(phsm_municipal()$contact)*2 +
-                                       as.numeric(input$case_contact)*3 +
+                                       as.numeric(case_contact_coded())*3 +
                                        as.numeric(input$prop_test)*1 +
                                        as.numeric(phsm_municipal()$gathering)*2 +
                                        as.numeric(phsm_municipal()$disturbance)*2 +
-                                       as.numeric(input$prop_adhere)*3
+                                       as.numeric(prop_adhere_coded())*3
         )
         return(public_health_measures)
     })
@@ -1077,24 +1190,58 @@ server <- function(input, output, session) {
         return(final_df)
     }, striped = TRUE, bordered = TRUE, hover = TRUE)
     
-    final_vun_input <- reactive({
-        public_health_measures <- (as.numeric(phsm_municipal()$social)*3 +
-                                       as.numeric(phsm_municipal()$isolation)*3 +
-                                       as.numeric(phsm_municipal()$support)*3 +
-                                       as.numeric(input$speed)*3 +
-                                       as.numeric(input$case_qtine)*3 +
-                                       as.numeric(phsm_municipal()$contact)*2 +
-                                       as.numeric(input$case_contact)*3 +
-                                       as.numeric(input$prop_test)*1 +
-                                       as.numeric(phsm_municipal()$gathering)*2 +
-                                       as.numeric(phsm_municipal()$disturbance)*2 +
-                                       as.numeric(input$prop_adhere)*3
+    # FIX CODE AFTER PRESENTATION
+    final_vun <- reactive({
+        final_vunerability <- (as.numeric(individual()) +
+                                       as.numeric(social()) +
+                                       as.numeric(epi_transmission()) +
+                                       as.numeric(epi_mortality()) +
+                                       as.numeric(social()) +
+                                       as.numeric(individual())
         )
-        return(public_health_measures)
+        return(final_vunerability)
     })
     
-    output$final_vun <- renderPrint({
-        return(writeLines(as.character(public_health())))
+    output$final_vun_output <- renderPrint({
+        return(writeLines(as.character(final_vun())))
+    })
+    
+    final_vun_text <- reactive({
+        req(final_vun())
+        if (final_vun() >= 0 & final_vun() <= 30) {
+            return("Minimal")
+        } else if (final_vun() >= 31 & final_vun() <= 60) {
+            return("Low")
+        } else if (final_vun() >= 61 & final_vun() <= 90) {
+            return("Moderate Risk")
+        } else if (final_vun() >= 91 & final_vun() <= 120) {
+            return("High")
+        } else if (final_vun() >= 121 & final_vun() <= 144) {
+            return("Very High Risk")
+        }
+    })
+    
+    output$final_vun_text <- renderPrint({
+        return(writeLines(as.character(final_vun_text())))
+    })
+    
+    final_miti_text <- reactive({
+        req(public_health())
+        if (public_health() >= 0 & public_health() <= 10) {
+            return("Very High")
+        } else if (public_health() >= 11 & public_health() <= 20) {
+            return("High")
+        } else if (public_health() >= 21 & public_health() <= 30) {
+            return("Moderate")
+        } else if (public_health() >= 31 & public_health() <= 40) {
+            return("Low")
+        } else if (public_health() >= 41 & public_health() <= 51) {
+            return("Minimal")
+        }
+    })
+    
+    output$final_miti_text <- renderPrint({
+        return(writeLines(as.character(final_miti_text())))
     })
     
     output$final_miti <- renderPrint({
