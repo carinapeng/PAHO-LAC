@@ -117,9 +117,9 @@ ui <- fluidPage(
                          fluidRow(
                              column(4,
                                     sliderInput("pop_dens", label = h4("1. Population density / Km²"), min = 0, 
-                                                max = 4, value = 0),
-                                    verbatimTextOutput("pop_dens01")
-                
+                                                max = 25, value = 0),
+                                    verbatimTextOutput("pop_dens01"),
+                                    verbatimTextOutput("testing")
                                     ),
                              column(4,
                                     sliderInput("water", label = h4("2. Availability of water and soap for hand washing inside the home"), min = 0, 
@@ -407,15 +407,7 @@ server <- function(input, output, session) {
         
         return(combined_transpose)
     })
-    
-    contexto05 <- reactive({
-        if (is.null(municipal()$contexto05)) {
-            return(input$publictrans)
-        }
-        else {
-            return(as.character(municipal()$contexto05))
-        }
-    })
+
     
     # TEST - Show the table for filtered PHSM excel with selected municipal
     output$phsm_table_test <- renderTable({
@@ -439,6 +431,30 @@ server <- function(input, output, session) {
     output$plot2 <- renderPlot({
         plot(df(), what=c("R"))
     })
+    
+    # 0 = 0.03 to 0.90
+    #1 = 0.91 to 2.45
+    #2 = 2.46 to 8.08
+    #3 = 8.09 to 22.50
+    #4 = ≥22.51
+    
+    pop_dens_coded <- reactive({
+        req(input$pop_dens)
+        if (input$pop_dens >= 0.3&input$pop_dens <= 0.9) {
+            return(0)
+        } else if (input$pop_dens >= 0.91&input$pop_dens <= 2.45) {
+            return(1)
+        } else if (input$pop_dens >= 2.46&input$pop_dens <= 8.08) {
+            return(2)
+        } else if (input$pop_dens >= 8.09&input$pop_dens <= 22.5) {
+            return(3)
+        } else if (input$pop_dens >= 22.51) {
+            return(4)
+        }
+    })
+    
+    output$testing <- renderText(pop_dens_coded())
+    
     
     contexto01 <- reactive({
         if (is.null(municipal()$contexto01)) {
