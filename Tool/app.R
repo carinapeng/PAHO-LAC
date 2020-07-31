@@ -27,6 +27,7 @@ library(ggplot2)
 library(incidence)
 library(data.table)
 library(shinyWidgets)
+library(DT)
 options(shiny.maxRequestSize=2650*1024^2)
 
 
@@ -118,8 +119,8 @@ ui <- fluidPage(
                              column(4,
                                     sliderInput("pop_dens", label = h4("1. Population density / Km²"), min = 0, 
                                                 max = 25, value = 0),
-                                    verbatimTextOutput("pop_dens01"),
-                                    verbatimTextOutput("testing")
+                                    verbatimTextOutput("pop_dens01")#,
+                                    #verbatimTextOutput("testing")
                                     ),
                              column(4,
                                     sliderInput("water", label = h4("2. Availability of water and soap for hand washing inside the home"), min = 0, 
@@ -317,7 +318,18 @@ ui <- fluidPage(
                      verbatimTextOutput("contents5"),
                      plotOutput("plot1"),
                      plotOutput("plot2"),
-                     tableOutput("contents2"))
+                     tableOutput("contents2")),
+            tabPanel("Score",
+                     h3("Scores & Interpretation"),
+                     fluidRow(
+                         column(5, 
+                                tableOutput("tbl")),
+                         column(5, 
+                                tags$img(src = "matrix1.png", height = 200, width = 400))
+                     ),
+                     #tableOutput("tbl"),
+                     #tags$img(src = "matrix1.png", height = 200, width = 400),
+                     tags$img(src = "matrix2.png", height = 450, width = 500))
         ))))
         
 
@@ -432,12 +444,6 @@ server <- function(input, output, session) {
         plot(df(), what=c("R"))
     })
     
-    # 0 = 0.03 to 0.90
-    #1 = 0.91 to 2.45
-    #2 = 2.46 to 8.08
-    #3 = 8.09 to 22.50
-    #4 = ≥22.51
-    
     pop_dens_coded <- reactive({
         req(input$pop_dens)
         if (input$pop_dens >= 0.3&input$pop_dens <= 0.9) {
@@ -453,12 +459,11 @@ server <- function(input, output, session) {
         }
     })
     
-    output$testing <- renderText(pop_dens_coded())
-    
+    #output$testing <- renderText(contexto01())
     
     contexto01 <- reactive({
         if (is.null(municipal()$contexto01)) {
-            return(input$pop_dens)
+            return(pop_dens_coded())
         }
         else {
             return(as.character(municipal()$contexto01))
@@ -930,7 +935,7 @@ server <- function(input, output, session) {
                                         as.numeric(contexto08())*2 +
                                         as.numeric(contexto09())*2
                                     )
-        return(individual_vunerability)
+        return(as.numeric(individual_vunerability))
     })
     
     
@@ -993,12 +998,42 @@ server <- function(input, output, session) {
         return(writeLines(as.character(public_health())))
     })
     
-    
-    output$contents5 <- renderPrint({
+    Rt <- reactive({
         x <- df()$R$Mean
-        return(writeLines(c("The current reproductive number (R) is estimated to be", round(x[length(x)],digits=2))))
+        return(round(x[length(x)],digits=2))
     })
     
+    output$contents5 <- renderPrint({
+        return(writeLines(c("The current reproductive number (R) is estimated to be", Rt())))
+    })
+        
+    epi_transmission <- reactive({
+        epi_trans <- (as.numeric(Rt())*2)
+        return(epi_trans)
+    })
+    
+    output$tbl <- renderTable({
+        final_df <- data.frame(
+            Category = c(
+                "Context - Individual vulnerability",
+                "Context - Social vulnerability",
+                "Epidemiology - Transmission",
+                "Epidemiology - Social vulnerability",
+                "Healthcare Systems - Transmission",
+                "Healthcare Systems - Mortality",
+                "Public health and social measures"
+            ),
+            Score = c(individual(),
+                      social(),
+                      epi_transmission(),
+                      individual(),
+                      social(),
+                      individual(),
+                      social())
+        )
+        
+        return(final_df)
+    }, striped = TRUE, bordered = TRUE, hover = TRUE)
     
 }
 
