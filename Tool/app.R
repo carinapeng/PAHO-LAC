@@ -255,23 +255,69 @@ ui <- fluidPage(
                          #sliderTextInput(inputId = "social_dist", label = "16. Physical and social distancing and movement measures in place", grid = TRUE, force_edges = TRUE,
                              #choices = c("No", "Some", "Yes")
                          #),
-                         h4("16. Physical and social distancing and movement measures in place"),
-                         verbatimTextOutput("social_dist16"),
+                         fluidRow(
+                             column(4, h4("16. Physical and social distancing and movement measures in place"),
+                                    verbatimTextOutput("social_dist16")),
+                             column(4, h4("17. Implementation of self-isolation and forced isolation measures"),
+                                    verbatimTextOutput("isolation17")),
+                             column(4, h4("18. Implementation of support measures during self-isolation/quarantine"),
+                                    verbatimTextOutput("support18"))
+                         ),
+                         fluidRow(
+                             column(4,
+                                    sliderInput("speed", label = h4("19. Speed of isolation for new cases"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("speed19")
+                             ),
+                             column(4,
+                                    sliderInput("case_qtine", label = h4("20. Proportion of cases identified among quarantined persons"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("case_qtine20")
+                             ),
+                             column(4, h4("21. Implementation of contact tracing"),
+                                    verbatimTextOutput("contact_tracing21"))  
+                         ),
+                         fluidRow(
+                             column(4,
+                                    sliderInput("case_contact", label = h4("22. Proportion of cases identified from a contact list"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("case_contact22")
+                             ),
+                             column(4,
+                                    sliderInput("prop_test", label = h4("23. Proportion of persons tested for every new COVID-19 case detected, in the last week"), min = 0, 
+                                                max = 1, value = 0),
+                                    verbatimTextOutput("prop_test20")
+                             ),
+                             
+                             column(4,
+                                    h4("24. Mass gatherings"),
+                                    verbatimTextOutput("gathering24"))
+                         ),
+                         fluidRow(
+                             column(4,
+                                 h4("25. Social disturbances"),
+                                 verbatimTextOutput("disturbance25")
+                             ),
+                             column(4,
+                                 sliderInput("prop_adhere", label = h4("26. Proportion of the population who adheres to mitigation measures"), min = 0, max = 1, value = 0),
+                                 verbatimTextOutput("prop_adhere26")
+                             )
+                ), 
                          tableOutput("phsm_table_test"),
                          h4("Public Health and Social Measures Score"),
-                         tags$head(tags$style('h1 {color:red;}')),
-                         verbatimTextOutput("miti3"),
-                         tags$head(tags$style("#miti3{color: #0085b2;
+                tags$head(tags$style('h1 {color:red;}')),
+                verbatimTextOutput("miti3"),
+                tags$head(tags$style("#miti3{color: #0085b2;
                                  font-size: 16px;
                                  }"
-                         ))
-                         ),
-                tabPanel("Epidemiology", 
-                         h3("Epidemiology Statistics"),
-                         verbatimTextOutput("contents5"),
-                         plotOutput("plot1"),
-                         plotOutput("plot2"),
-                         tableOutput("contents2"))
+                ))
+            ),
+            tabPanel("Epidemiology", 
+                     h3("Epidemiology Statistics"),
+                     verbatimTextOutput("contents5"),
+                     plotOutput("plot1"),
+                     plotOutput("plot2"),
+                     tableOutput("contents2"))
         ))))
         
 
@@ -803,6 +849,59 @@ server <- function(input, output, session) {
         }
     })
     
+    output$social_dist16 <- renderPrint({
+        if (phsm_municipal()$social == 0) {
+            return(writeLines("Yes"))
+        }
+        else{
+            return(writeLines("No"))
+        }
+    })
+    
+    output$isolation17 <- renderPrint({
+        if (phsm_municipal()$isolation == 0) {
+            return(writeLines("Yes"))
+        }
+        else{
+            return(writeLines("No"))
+        }
+    })
+    
+    output$support18 <- renderPrint({
+        if (phsm_municipal()$support == 0) {
+            return(writeLines("Yes"))
+        }
+        else{
+            return(writeLines("No"))
+        }
+    })
+    
+    output$contact_tracing21 <- renderPrint({
+        if (phsm_municipal()$contact == 0) {
+            return(writeLines("Yes"))
+        }
+        else{
+            return(writeLines("No"))
+        }
+    })
+    
+    output$gathering24 <- renderPrint({
+        if (phsm_municipal()$gathering == 0) {
+            return(writeLines("Yes"))
+        }
+        else{
+            return(writeLines("No"))
+        }
+    })
+    
+    output$disturbance25 <- renderPrint({
+        if (phsm_municipal()$disturbance == 0) {
+            return(writeLines("Yes"))
+        }
+        else{
+            return(writeLines("No"))
+        }
+    })
 
     individual <- reactive({
         individual_vunerability <- (as.numeric(contexto01())*2 + 
