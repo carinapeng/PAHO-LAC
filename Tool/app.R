@@ -959,11 +959,16 @@ server <- function(input, output, session) {
     
     public_health <- reactive({
         public_health_measures <- (as.numeric(phsm_municipal()$social)*3 +
-            as.numeric(phsm_municipal()$isolation)*3 +
-            as.numeric(phsm_municipal()$support)*3 +
-            as.numeric(phsm_municipal()$contact)*2 +
-            as.numeric(phsm_municipal()$gathering)*2 +
-            as.numeric(phsm_municipal()$disturbance)*2
+                                       as.numeric(phsm_municipal()$isolation)*3 +
+                                       as.numeric(phsm_municipal()$support)*3 +
+                                       as.numeric(input$speed)*3 +
+                                       as.numeric(input$case_qtine)*3 +
+                                       as.numeric(phsm_municipal()$contact)*2 +
+                                       as.numeric(input$case_contact)*3 +
+                                       as.numeric(input$prop_test)*1 +
+                                       as.numeric(phsm_municipal()$gathering)*2 +
+                                       as.numeric(phsm_municipal()$disturbance)*2 +
+                                       as.numeric(input$prop_adhere)*3
         )
         return(public_health_measures)
     })
