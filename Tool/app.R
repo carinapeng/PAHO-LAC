@@ -318,18 +318,53 @@ ui <- fluidPage(
                      verbatimTextOutput("contents5"),
                      plotOutput("plot1"),
                      plotOutput("plot2"),
-                     tableOutput("contents2")),
+                     h4("Measure of Mortality"),
+                     fluidRow(
+                         column(4,
+                                sliderInput("case_mort", label = h4("9. Case mortality rate "), min = 0, 
+                                            max = 1, value = 0),
+                                verbatimTextOutput("case_mort9")
+                         ),
+                         column(4,
+                                sliderInput("case_men", label = h4("10. Case lethality rate among men"), min = 0, 
+                                            max = 1, value = 0),
+                                verbatimTextOutput("case_men10")
+                         ),
+                         column(4,
+                                sliderInput("case_elder", label = h4("11. Case lethality rate among the elderly"), min = 0, 
+                                            max = 1, value = 0),
+                                verbatimTextOutput("case_elder11")
+                         ),
+                         column(4,
+                                sliderInput("excess_death", label = h4("12. Number of excess deaths compared to 2015-2019"), min = 0, 
+                                            max = 1, value = 0),
+                                verbatimTextOutput("excess_death12")
+                         )
+                     )
+                     ),
             tabPanel("Score",
                      h3("Scores & Interpretation"),
+                     tableOutput("tbl"),
                      fluidRow(
-                         column(5, 
-                                tableOutput("tbl")),
-                         column(5, 
-                                tags$img(src = "matrix1.png", height = 200, width = 400))
+                         column(5,
+                                h4("Vunerability Score"),
+                                tags$head(tags$style('h1 {color:red;}')),
+                                verbatimTextOutput("final_vun"),
+                                tags$head(tags$style("#final_vun{color: #0085b2;
+                                 font-size: 16px;
+                                 }"
+                                ))),
+                         column(5,
+                                h4("Mitigation Score"),
+                                tags$head(tags$style('h1 {color:red;}')),
+                                verbatimTextOutput("final_miti"),
+                                tags$head(tags$style("#final_miti{color: #0085b2;
+                                 font-size: 16px;
+                                 }"
+                                )))
                      ),
-                     #tableOutput("tbl"),
-                     #tags$img(src = "matrix1.png", height = 200, width = 400),
-                     tags$img(src = "matrix2.png", height = 450, width = 500))
+                     tags$img(src = "matrix1.png", height = 200, width = 400),
+                     tags$img(src = "matrix2.png", height = 400, width = 450))
         ))))
         
 
@@ -1012,6 +1047,15 @@ server <- function(input, output, session) {
         return(epi_trans)
     })
     
+    epi_mortality <- reactive({
+        epi_mortality_input <- (as.numeric(input$case_mort)*3 +
+                                    as.numeric(input$case_men)*1 +
+                                    as.numeric(input$case_elder)*1 +
+                                    as.numeric(input$excess_death)*2
+        )
+        return(epi_mortality_input)
+    })
+    
     output$tbl <- renderTable({
         final_df <- data.frame(
             Category = c(
@@ -1020,20 +1064,42 @@ server <- function(input, output, session) {
                 "Epidemiology - Transmission",
                 "Epidemiology - Social vulnerability",
                 "Healthcare Systems - Transmission",
-                "Healthcare Systems - Mortality",
-                "Public health and social measures"
+                "Healthcare Systems - Mortality"
             ),
             Score = c(individual(),
                       social(),
                       epi_transmission(),
-                      individual(),
+                      epi_mortality(),
                       social(),
-                      individual(),
-                      social())
+                      individual())
         )
         
         return(final_df)
     }, striped = TRUE, bordered = TRUE, hover = TRUE)
+    
+    final_vun_input <- reactive({
+        public_health_measures <- (as.numeric(phsm_municipal()$social)*3 +
+                                       as.numeric(phsm_municipal()$isolation)*3 +
+                                       as.numeric(phsm_municipal()$support)*3 +
+                                       as.numeric(input$speed)*3 +
+                                       as.numeric(input$case_qtine)*3 +
+                                       as.numeric(phsm_municipal()$contact)*2 +
+                                       as.numeric(input$case_contact)*3 +
+                                       as.numeric(input$prop_test)*1 +
+                                       as.numeric(phsm_municipal()$gathering)*2 +
+                                       as.numeric(phsm_municipal()$disturbance)*2 +
+                                       as.numeric(input$prop_adhere)*3
+        )
+        return(public_health_measures)
+    })
+    
+    output$final_vun <- renderPrint({
+        return(writeLines(as.character(public_health())))
+    })
+    
+    output$final_miti <- renderPrint({
+        return(writeLines(as.character(public_health())))
+    })
     
 }
 
