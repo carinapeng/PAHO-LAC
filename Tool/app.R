@@ -26,6 +26,7 @@ library(knitr)
 library(ggplot2)
 library(incidence)
 library(data.table)
+library(shinyWidgets)
 options(shiny.maxRequestSize=2650*1024^2)
 
 
@@ -251,10 +252,19 @@ ui <- fluidPage(
                 ),
                 tabPanel("Mitigation",
                          h3("HEALTHCARE SYSTEMS TO TEST AND TREAT COVID-19 CASES - To be updated each month"),
-                         sliderInput("social_dist", label = h4("16. Physical and social distancing and movement measures in place"), min = 0, 
-                                     max = 2, value = 0),
+                         #sliderTextInput(inputId = "social_dist", label = "16. Physical and social distancing and movement measures in place", grid = TRUE, force_edges = TRUE,
+                             #choices = c("No", "Some", "Yes")
+                         #),
+                         h4("16. Physical and social distancing and movement measures in place"),
                          verbatimTextOutput("social_dist16"),
-                         tableOutput("phsm_table_test")
+                         tableOutput("phsm_table_test"),
+                         h4("Public Health and Social Measures Score"),
+                         tags$head(tags$style('h1 {color:red;}')),
+                         verbatimTextOutput("miti3"),
+                         tags$head(tags$style("#miti3{color: #0085b2;
+                                 font-size: 16px;
+                                 }"
+                         ))
                          ),
                 tabPanel("Epidemiology", 
                          h3("Epidemiology Statistics"),
@@ -350,6 +360,15 @@ server <- function(input, output, session) {
         colnames(combined_transpose) <- rownames(combined)
         
         return(combined_transpose)
+    })
+    
+    contexto05 <- reactive({
+        if (is.null(municipal()$contexto05)) {
+            return(input$publictrans)
+        }
+        else {
+            return(as.character(municipal()$contexto05))
+        }
     })
     
     # TEST - Show the table for filtered PHSM excel with selected municipal
@@ -564,17 +583,6 @@ server <- function(input, output, session) {
         }
     })
     
-    
-    
-    # Shows the table for coded csv by selected municipal
-    #output$contents <- renderTable({
-        #if (is.null(df())) {
-            #return(NULL)
-        #}
-        #else {
-            #return(municipal())
-        #}
-    #})
     
     output$pop_dens01 <- renderPrint({
         if (is.null(municipal()$contexto01)) {
@@ -794,18 +802,7 @@ server <- function(input, output, session) {
             return(disable("groupq"))
         }
     })
-    #is.null(my_list[["numbers"]]) 
-    # MITIGATION
     
-    #output$social_dist16 <- renderPrint({
-        #if (!is.null(phsm_municipal()$who_category[["Social and physical distancing measures"]])) {
-            #return(writeLines("0 = Yes, 2 = No"))
-        #}
-        
-        #else {
-            #return(disable("social_dist"))
-        #}
-    #})
 
     individual <- reactive({
         individual_vunerability <- (as.numeric(contexto01())*2 + 
@@ -859,6 +856,21 @@ server <- function(input, output, session) {
     
     output$context2 <- renderPrint({
         return(writeLines(as.character(social())))
+    })
+    
+    public_health <- reactive({
+        public_health_measures <- (as.numeric(phsm_municipal()$social)*3 +
+            as.numeric(phsm_municipal()$isolation)*3 +
+            as.numeric(phsm_municipal()$support)*3 +
+            as.numeric(phsm_municipal()$contact)*2 +
+            as.numeric(phsm_municipal()$gathering)*2 +
+            as.numeric(phsm_municipal()$disturbance)*2
+        )
+        return(public_health_measures)
+    })
+    
+    output$miti3 <- renderPrint({
+        return(writeLines(as.character(public_health())))
     })
     
     
