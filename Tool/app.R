@@ -266,13 +266,13 @@ ui <- fluidPage(
                              column(4,
                                     sliderInput("inc_elder", label = h4("3. Incidence rate among the elderly"), min = 0, 
                                                 max = 1, value = 0, step = 1)
-                             ),
-                             column(4,
-                                    sliderInput("perc_pos", label = h4("4. Percent positivity rate (%)"), min = 0, 
-                                                max = 1, value = 0, step = 1)
                              )
                          ),
                          fluidRow(
+                             column(4,
+                                    sliderInput("perc_pos", label = h4("4. Percent positivity rate (%)"), min = 0, 
+                                                max = 1, value = 0, step = 1)
+                             ),
                              column(4,
                                     sliderInput("doub", label = h4("5. Doubling rate for cases"), min = 0, 
                                                 max = 3, value = 0, step = 1)
@@ -280,7 +280,9 @@ ui <- fluidPage(
                              column(4,
                                     sliderInput("type", label = h4("6. Type of COVID-19 transmission in the neighborhood"), min = 0, 
                                                 max = 3, value = 0, step = 1)
-                             ),
+                             )
+                         ),
+                         fluidRow(
                              column(4,
                                     sliderInput("Rt", label = h4("7. Neighborhood-specific reproductive rate (Rt)"), min = 0, 
                                                 max = 2, value = 0, step = 1),
@@ -320,7 +322,7 @@ ui <- fluidPage(
                          )
                 ),
                 tabPanel("Mitigation",
-                         h3("HEALTHCARE SYSTEMS TO TEST AND TREAT COVID-19 CASES - To be updated each month"),
+                         h3("Healthcare Systems tp Test and Treat COVID-19 Cases"),
                          #sliderTextInput(inputId = "social_dist", label = "16. Physical and social distancing and movement measures in place", grid = TRUE, force_edges = TRUE,
                              #choices = c("No", "Some", "Yes")
                          #),
@@ -1203,8 +1205,6 @@ server <- function(input, output, session) {
         
         else {
             #return(((multi_return())))
-            #return(disable("Rt"))
-            #return(cat(paste("The current reproductive number (R) is estimated to be", Rt_raw())))
             return(cat(Rt_raw()))
         }
     })
@@ -1224,7 +1224,7 @@ server <- function(input, output, session) {
     #})
         
     epi_transmission <- reactive({
-        epi_trans <- (as.numeric(Rt())*2)
+        epi_trans <- (as.numeric(Rt_raw())*2)
         return(epi_trans)
     })
     
