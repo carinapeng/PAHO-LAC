@@ -156,7 +156,7 @@ ui <- fluidPage(
                                     ),
                              column(4,
                                     sliderInput("vac_elder", label = h4("8. Under- or non-vaccinated population: persons age 60 or older"), min = 0, 
-                                                max = 1, value = 0, step = 1),
+                                                max = 100, value = 0, step = 1),
                                     verbatimTextOutput("vac_elder08")
                              ),
                              column(4,
@@ -229,17 +229,17 @@ ui <- fluidPage(
                          fluidRow(
                              column(4,
                                     sliderInput("nbpersons", label = h4("19. Crowded household"), min = 0, 
-                                                max = 1, value = 0),
+                                                max = 1, value = 0, step = 1),
                                     verbatimTextOutput("nbpersons19")
                              ),
                              column(4,
                                     sliderInput("vehicle", label = h4("20. Vehicle availability"), min = 0, 
-                                                max = 1, value = 0),
+                                                max = 1, value = 0, step = 1),
                                     verbatimTextOutput("vehicle20")
                              ),
                              column(4,
                                     sliderInput("groupq", label = h4("21. Group quarters"), min = 0, 
-                                                max = 1, value = 0),
+                                                max = 1, value = 0, step = 1),
                                     verbatimTextOutput("groupq21")
                              )),
                          h4("Social Vunerability Score"),
@@ -252,10 +252,48 @@ ui <- fluidPage(
                          withMathJax(includeMarkdown("/Users/carinapeng/PAHO-LAC/context2.md"))
                 ),
                 tabPanel("Epidemiology", 
-                         h3("Epidemiology Statistics"),
-                         verbatimTextOutput("contents5"),
-                         plotOutput("plot1"),
-                         plotOutput("plot2"),
+                         h3("Epidemiological Situation of the COVID-19 Pandemic in the Neighborhood"),
+                         h4("Measure of Transmission"),
+                         fluidRow(
+                             column(4,
+                                    sliderInput("inc", label = h4("1. Incidence rate per 100,000 population"), min = 0, 
+                                                max = 1, value = 0, step = 1)
+                             ),
+                             column(4,
+                                    sliderInput("inc_men", label = h4("2. Incidence rate among men"), min = 0, 
+                                                max = 1, value = 0, step = 1)
+                             ),
+                             column(4,
+                                    sliderInput("inc_elder", label = h4("3. Incidence rate among the elderly"), min = 0, 
+                                                max = 1, value = 0, step = 1)
+                             ),
+                             column(4,
+                                    sliderInput("perc_pos", label = h4("4. Percent positivity rate (%)"), min = 0, 
+                                                max = 1, value = 0, step = 1)
+                             )
+                         ),
+                         fluidRow(
+                             column(4,
+                                    sliderInput("doub", label = h4("5. Doubling rate for cases"), min = 0, 
+                                                max = 3, value = 0, step = 1)
+                             ),
+                             column(4,
+                                    sliderInput("type", label = h4("6. Type of COVID-19 transmission in the neighborhood"), min = 0, 
+                                                max = 3, value = 0, step = 1)
+                             ),
+                             column(4,
+                                    sliderInput("Rt", label = h4("7. Neighborhood-specific reproductive rate (Rt)"), min = 0, 
+                                                max = 2, value = 0, step = 1),
+                                    verbatimTextOutput("Rt07")
+                             ),
+                             column(4,
+                                    sliderInput("adj", label = h4("8. Presence of COVID-19 hotspot in an adjacent neighborhood"), min = 0, 
+                                                max = 1, value = 0, step = 1)
+                             )
+                         ),
+                         #verbatimTextOutput("contents5"),
+                         #plotOutput("plot1"),
+                         #plotOutput("plot2"),
                          h4("Measure of Mortality"),
                          fluidRow(
                              column(4,
@@ -488,12 +526,12 @@ server <- function(input, output, session) {
     })
     
     
-    output$plot1 <- renderPlot({
-        plot(df(), what=c("incid"))
-    })
-    output$plot2 <- renderPlot({
-        plot(df(), what=c("R"))
-    })
+    #output$plot1 <- renderPlot({
+        #plot(df(), what=c("incid"))
+    #})
+    #output$plot2 <- renderPlot({
+        #plot(df(), what=c("R"))
+    #})
     
     pop_dens_coded <- reactive({
         req(input$pop_dens)
@@ -1146,14 +1184,29 @@ server <- function(input, output, session) {
         return(writeLines(as.character(public_health())))
     })
     
-    Rt <- reactive({
+    Rt_raw <- reactive({
         x <- df()$R$Mean
         return(round(x[length(x)],digits=2))
     })
     
-    output$contents5 <- renderPrint({
-        return(writeLines(c("The current reproductive number (R) is estimated to be", Rt())))
+    multi_return <- function(){
+        my_list <- list(c(disable("Rt"), writeLines("The current reproductive number (R) is estimated to be", Rt_raw())))
+        return(my_list)
+    }
+    
+    output$Rt07 <- renderPrint({
+        if (is.null(Rt_raw())) {
+            return(writeLines("Please enter value."))
+        }
+        
+        else {
+            return(((multi_return())))
+        }
     })
+    
+    #output$contents5 <- renderPrint({
+        #return(writeLines(c("The current reproductive number (R) is estimated to be", Rt())))
+    #})
         
     epi_transmission <- reactive({
         epi_trans <- (as.numeric(Rt())*2)
