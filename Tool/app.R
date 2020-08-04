@@ -151,7 +151,7 @@ ui <- fluidPage(
                          fluidRow(
                              column(4,
                                     sliderInput("vac_children", label = h4("7. Under- or non-vaccinated population: children younger than 1"), min = 0, 
-                                                max = 1, value = 0, step = 1),
+                                                max = 100, value = 0, step = 1),
                                     verbatimTextOutput("vac_children07")
                                     ),
                              column(4,
@@ -823,7 +823,7 @@ server <- function(input, output, session) {
     
     output$vac_children07 <- renderPrint({
         if (is.null(municipal()$contexto07)) {
-            return(writeLines("Please enter value."))
+            return(writeLines("Please enter value: Proportion of children younger than 1 that has vaccination coverage with three doses of DPT vaccine."))
         }
         
         else {
@@ -834,7 +834,7 @@ server <- function(input, output, session) {
     
     output$vac_elder08 <- renderPrint({
         if (is.null(municipal()$contexto08)) {
-            return(writeLines("Please enter value."))
+            return(writeLines("Please enter value: Proportion of persons age 60 or older that has vaccination coverage with one dose of influenza vaccine in the previous year."))
         }
         
         else {
