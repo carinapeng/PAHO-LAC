@@ -284,7 +284,8 @@ ui <- fluidPage(
                              column(4,
                                     sliderInput("Rt", label = h4("7. Neighborhood-specific reproductive rate (Rt)"), min = 0, 
                                                 max = 2, value = 0, step = 1),
-                                    verbatimTextOutput("Rt07")
+                                    verbatimTextOutput("Rt07"),
+                                    verbatimTextOutput("Rt07_disable")
                              ),
                              column(4,
                                     sliderInput("adj", label = h4("8. Presence of COVID-19 hotspot in an adjacent neighborhood"), min = 0, 
@@ -1189,10 +1190,11 @@ server <- function(input, output, session) {
         return(round(x[length(x)],digits=2))
     })
     
-    multi_return <- function(){
-        my_list <- list(c(disable("Rt"), writeLines("The current reproductive number (R) is estimated to be", Rt_raw())))
-        return(my_list)
-    }
+    
+    #multi_return <- function(){
+        #my_list <- list(c(disable("Rt"), paste("The current reproductive number (R) is estimated to be", Rt_raw())))
+        #return(my_list)
+    #}
     
     output$Rt07 <- renderPrint({
         if (is.null(Rt_raw())) {
@@ -1200,7 +1202,20 @@ server <- function(input, output, session) {
         }
         
         else {
-            return(((multi_return())))
+            #return(((multi_return())))
+            #return(disable("Rt"))
+            #return(cat(paste("The current reproductive number (R) is estimated to be", Rt_raw())))
+            return(cat(Rt_raw()))
+        }
+    })
+    
+    output$Rt07_disable <- renderPrint({
+        if (is.null(Rt_raw())) {
+            return()
+        }
+        
+        else {
+            return(disable("Rt"))
         }
     })
     
