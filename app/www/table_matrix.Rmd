@@ -1,0 +1,71 @@
+---
+title: "table_matrix"
+author: "Carina Peng"
+date: "8/4/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(data.table)
+library(dplyr)
+library(formattable)
+library(tidyr)
+library(gt)
+library(tidyverse)
+
+#Set a few color variables to make our table more visually appealing
+customGreen = "#90a88e"
+  #"#708160"
+customRed = "#f03b00"
+  #"#bb3b0e"
+customYellow = "#fbd977"
+  #"#d8c593"
+customOrange = "#e18d01"
+  #"#dd7631"
+```
+
+```{r}
+
+
+df <- data.frame(
+vunerability = c("Minimal", "Low", "Moderate Risk", "High", "Very High Risk"),
+very_high = c("Low", "Low", "Low", "Low", "Low"),
+high = c("Low", "Low", "Moderate", "High", "Very High"),
+moderate = c("Low", "Moderate", "Moderate", "High", "Very High"),
+low = c("Moderate", "Moderate", "High", "Very High", "Very High"),
+minimal = c("High", "High", "Very High", "Very High", "Very High")
+)
+
+
+
+v = formatter("span",
+              style = x ~ style(
+                font.weight = "bold",
+                color = ifelse(x == "Low", customGreen, 
+                               ifelse(x == "Very High", customRed,
+                                      ifelse(x == "Moderate", customYellow,
+                                             customOrange)))
+                ))
+
+
+formattable(df,
+            align = c("l", "c", "c", "c", "c", "c"),
+            list(vunerability = formatter(
+              "span", style = ~ style(color = "black",font.weight = "bold")),
+              very_high = v,
+              high = v,
+              moderate = v,
+              low = v,
+              minimal = v
+            ))
+```
+
+```{r}
+df %>%
+  gt() %>%
+  tab_header(title = "Risk characterization") %>%
+  tab_stubhead(label = "Risk")
+```
+
