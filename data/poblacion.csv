@@ -1,0 +1,193 @@
+region,estado,comuna_nome,comuna,superficie,poblacion,densidad,,
+9,Distrito Federal,Álvaro Obregón,2,96.17,749982,7798.5,,FALSE
+9,Distrito Federal,Azcapotzalco,3,33.66,400161,11888.32,,FALSE
+9,Distrito Federal,Benito Juárez,4,26.63,417416,15674.65,,FALSE
+9,Distrito Federal,Coyoacán,5,54.4,608479,11185.28,,FALSE
+9,Distrito Federal,Cuajimalpa de Morelos,6,74.58,199224,2671.28,,FALSE
+9,Distrito Federal,Cuauhtémoc,7,32.4,532553,16436.82,,FALSE
+9,Distrito Federal,Gustavo A. Madero,8,94.07,1164477,12378.83,,FALSE
+9,Distrito Federal,Iztacalco,9,23.3,390348,16753.13,,FALSE
+9,Distrito Federal,Iztapalapa,10,117,1827868,15622.8,,FALSE
+9,Distrito Federal,Magdalena Contreras,11,74.58,243886,3270.13,,FALSE
+9,Distrito Federal,Miguel Hidalgo,12,46.99,364439,7755.67,,FALSE
+9,Distrito Federal,Milpa Alta,13,228.41,137927,603.86,,FALSE
+9,Distrito Federal,Tláhuac,14,85.34,361593,4237.09,,FALSE
+9,Distrito Federal,Tlalpan,15,340.07,677104,1991.07,,FALSE
+9,Distrito Federal,Venustiano Carranza,16,33.4,427263,12792.31,,FALSE
+9,Distrito Federal,Xochimilco,17,118,415933,3524.86,,FALSE
+19,Monterrey,Abasolo,1,47.45,2639,55.62,,FALSE
+19,Monterrey,Agualeguas,2,979,2439,2.49,,FALSE
+19,Monterrey,Allende,3,697,34353,49.3,,FALSE
+19,Monterrey,Anáhuac,4,191,18194,95.5,,FALSE
+19,Monterrey,Apodaca,5,4573,597207,130.6,,FALSE
+19,Monterrey,Aramberri,6,238,16152,67.86,,FALSE
+19,Monterrey,Bustamante,7,2665,3977,1.49,,FALSE
+19,Monterrey,Cadereyta Jiménez,8,466,95534,205.18,,FALSE
+19,Monterrey,Cerralvo,9,1141,7757,6.8,,FALSE
+19,Monterrey,China,10,102,10835,105.83,,FALSE
+19,Monterrey,Ciénega de Flores,11,1007,42715,42.42,,FALSE
+19,Monterrey,Doctor Arroyo,12,147,34110,232.74,,FALSE
+19,Monterrey,Doctor Coss,13,4292,1632,0.38,,FALSE
+19,Monterrey,Doctor González,14,5091,2861,0.56,,FALSE
+19,Monterrey,El Carmen,15,721,38306,53.15,,FALSE
+19,Monterrey,Galeana,16,616,41130,66.79,,FALSE
+19,Monterrey,García,17,7011,247370,35.28,,FALSE
+19,Monterrey,General Bravo,18,1040,5479,5.27,,FALSE
+19,Monterrey,General Escobedo,19,72,425148,5904.01,,FALSE
+19,Monterrey,General Terán,20,1895,14795,7.81,,FALSE
+19,Monterrey,General Treviño,21,151,1044,6.9,,FALSE
+19,Monterrey,General Zaragoza,22,2479,6011,2.42,,FALSE
+19,Monterrey,General Zuazua,23,388,67294,173.42,,FALSE
+19,Monterrey,Guadalupe,24,1315,682880,519.49,,FALSE
+19,Monterrey,Hidalgo,25,185,13836,74.84,,FALSE
+19,Monterrey,Higueras,26,118,1511,12.83,,FALSE
+19,Monterrey,Hualahuises,27,497,6921,13.92,,FALSE
+19,Monterrey,Iturbide,28,444,3571,8.04,,FALSE
+19,Monterrey,Juárez,29,128,333481,2609.4,,FALSE
+19,Monterrey,Lampazos de Naranjo,30,562,5238,9.32,,FALSE
+19,Monterrey,Linares,31,247,79853,323.29,,FALSE
+19,Monterrey,Los Aldamas,32,3429,1292,0.38,,FALSE
+19,Monterrey,Los Herreras,33,2540,1764,0.69,,FALSE
+19,Monterrey,Los Ramones,34,264,4469,16.91,,FALSE
+19,Monterrey,Marín,35,208,5630,27.08,,FALSE
+19,Monterrey,Melchor Ocampo,36,1007,955,0.95,,FALSE
+19,Monterrey,Mier y Noriega,37,3872,6996,1.81,,FALSE
+19,Monterrey,Mina,38,1869,5326,2.85,,FALSE
+19,Monterrey,Montemorelos,39,892,60829,68.19,,FALSE
+19,Monterrey,Monterrey,40,1173,1109171,945.86,,FALSE
+19,Monterrey,Parás,41,309,971,3.14,,FALSE
+19,Monterrey,Pesquería,42,1342,87168,64.97,,FALSE
+19,Monterrey,Rayones,43,674,2640,3.92,,FALSE
+19,Monterrey,Sabinas Hidalgo,44,1542,35456,22.99,,FALSE
+19,Monterrey,Salinas Victoria,45,1658,54192,32.68,,FALSE
+19,Monterrey,San Nicolás de los Garza,46,60,430143,7157.12,,FALSE
+19,Monterrey,San Pedro Garza García,47,170,123156,723.94,,FALSE
+19,Monterrey,Santa Catarina,48,885,296954,335.54,,FALSE
+19,Monterrey,Santiago,49,746,42407,56.81,,FALSE
+19,Monterrey,Vallecillo,50,1766,1632,0.92,,FALSE
+19,Monterrey,Villaldama,51,880,4080,4.64,,FALSE
+14,Guadalajara ,Acatic,1,339,21530,63.47,,FALSE
+14,Guadalajara ,Acatlán de Juárez,2,153,22261,145.24,,FALSE
+14,Guadalajara ,Ahualulco de Mercado,3,274,23362,85.23,,FALSE
+14,Guadalajara ,Amacueca,4,125,5385,43.01,,FALSE
+14,Guadalajara ,Amatitán,5,174,15344,88.37,,FALSE
+14,Guadalajara ,Ameca,6,838,60951,72.75,,FALSE
+14,Guadalajara ,Arandas,7,1151,77116,67.03,,FALSE
+14,Guadalajara ,Atemajac de Brizuela,8,356,6717,18.89,,FALSE
+14,Guadalajara ,Atengo,9,441,5475,12.41,,FALSE
+14,Guadalajara ,Atenguillo,10,611,3899,6.38,,FALSE
+14,Guadalajara ,Atotonilco el Alto,11,511,60480,118.36,,FALSE
+14,Guadalajara ,Atoyac,12,451,8264,18.32,,FALSE
+14,Guadalajara ,Autlán de Navarro,13,706,60572,85.8,,FALSE
+14,Guadalajara ,Ayotlán,14,431,37963,88.07,,FALSE
+14,Guadalajara ,Ayutla,15,884,12453,14.09,,FALSE
+14,Guadalajara ,Bolaños,16,867,7341,8.47,,FALSE
+14,Guadalajara ,Cabo Corrientes,17,1541,10303,6.69,,FALSE
+14,Guadalajara ,Cañadas de Obregón,18,272,4110,15.09,,FALSE
+14,Guadalajara ,Casimiro Castillo,19,523,21584,41.31,,FALSE
+14,Guadalajara ,Chapala,20,613,50738,82.71,,FALSE
+14,Guadalajara ,Chimaltitán,21,656,3383,5.15,,FALSE
+14,Guadalajara ,Chiquilistlán,22,298,6102,20.49,,FALSE
+14,Guadalajara ,Cihuatlán,23,495,41300,83.45,,FALSE
+14,Guadalajara ,Cocula,24,331,26687,80.64,,FALSE
+14,Guadalajara ,Colotlán,25,643,17865,27.8,,FALSE
+14,Guadalajara ,Concepción de Buenos Aires,26,265,6088,22.94,,FALSE
+14,Guadalajara ,Cuautitlán de García Barragán,27,1394,18138,13.01,,FALSE
+14,Guadalajara ,Cuautla,28,417,2120,5.08,,FALSE
+14,Guadalajara ,Cuquío,29,643,17980,27.98,,FALSE
+14,Guadalajara ,Degollado,30,425,21479,50.54,,FALSE
+14,Guadalajara ,Ejutla,31,297,1862,6.26,,FALSE
+14,Guadalajara ,El Arenal,32,104,19900,191.36,,FALSE
+14,Guadalajara ,El Grullo,33,117,24312,207.44,,FALSE
+14,Guadalajara ,El Limón,34,114,5379,47.06,,FALSE
+14,Guadalajara ,El Salto,35,88,183437,2087.83,,FALSE
+14,Guadalajara ,Encarnación de Díaz,36,1253,53555,42.73,,FALSE
+14,Guadalajara ,Etzatlán,37,338,19847,58.72,,FALSE
+14,Guadalajara ,Gómez Farías,38,354,14278,40.37,,FALSE
+14,Guadalajara ,Guachinango,39,839,4184,4.99,,FALSE
+14,Guadalajara ,Guadalajara,40,151,1460148,9643.03,,FALSE
+14,Guadalajara ,Hostotipaquillo,41,756,9761,12.91,,FALSE
+14,Guadalajara ,Huejúcar,42,309,5633,18.24,,FALSE
+14,Guadalajara ,Huejuquilla el Alto,43,770,8787,11.41,,FALSE
+14,Guadalajara ,Ixtlahuacán de los Membrillos,44,202,53045,262.09,,FALSE
+14,Guadalajara ,Ixtlahuacán del Río,45,831,19070,22.94,,FALSE
+14,Guadalajara ,Jalostotitlán,46,520,33777,64.96,,FALSE
+14,Guadalajara ,Jamay,47,163,24753,152.06,,FALSE
+14,Guadalajara ,Jesús María,48,665,19469,29.27,,FALSE
+14,Guadalajara ,Jilotlán de los Dolores,49,1475,9917,6.72,,FALSE
+14,Guadalajara ,Jocotepec,50,334,46521,139.11,,FALSE
+14,Guadalajara ,Juanacatlán,51,138,17955,129.82,,FALSE
+14,Guadalajara ,Juchitlán,52,246,5638,22.88,,FALSE
+14,Guadalajara ,La Barca,53,418,65055,155.56,,FALSE
+14,Guadalajara ,La Huerta,54,2014,24563,12.2,,FALSE
+14,Guadalajara ,La Manzanilla de la Paz,55,135,3688,27.38,,FALSE
+14,Guadalajara ,Lagos de Moreno,56,2516,164981,65.58,,FALSE
+14,Guadalajara ,Magdalena,57,293,22643,77.22,,FALSE
+14,Guadalajara ,Mascota,58,1844,14477,7.85,,FALSE
+14,Guadalajara ,Mazamitla,59,289,13799,47.77,,FALSE
+14,Guadalajara ,Mexticacán,60,288,5088,17.69,,FALSE
+14,Guadalajara ,Mezquitic,61,3361,19452,5.79,,FALSE
+14,Guadalajara ,Mixtlán,62,630,3526,5.6,,FALSE
+14,Guadalajara ,Ocotlán,63,242,99461,410.22,,FALSE
+14,Guadalajara ,Ojuelos de Jalisco,64,1156,32357,27.99,,FALSE
+14,Guadalajara ,Pihuamo,65,875,11192,12.79,,FALSE
+14,Guadalajara ,Poncitlán,66,836,51944,62.14,,FALSE
+14,Guadalajara ,Puerto Vallarta,67,680,275640,405.11,,FALSE
+14,Guadalajara ,Quitupan,68,677,8379,12.39,,FALSE
+14,Guadalajara ,San Cristóbal de la Barranca,69,521,3117,5.98,,FALSE
+14,Guadalajara ,San Diego de Alejandría,70,352,7349,20.85,,FALSE
+14,Guadalajara ,San Gabriel,71,747,16105,21.55,,FALSE
+14,Guadalajara ,San Ignacio Cerro Gordo,72,262,18952,72.26,,FALSE
+14,Guadalajara ,San Juan de los Lagos,73,848,69725,82.25,,FALSE
+14,Guadalajara ,San Juanito de Escobedo,74,194,9420,48.44,,FALSE
+14,Guadalajara ,San Julián,75,262,15890,60.63,,FALSE
+14,Guadalajara ,San Marcos,76,306,3783,12.37,,FALSE
+14,Guadalajara ,San Martín de Bolaños,77,691,3122,4.52,,FALSE
+14,Guadalajara ,San Martín Hidalgo,78,344,27777,80.71,,FALSE
+14,Guadalajara ,San Miguel el Alto,79,787,32960,41.88,,FALSE
+14,Guadalajara ,San Pedro Tlaquepaque,80,1117,664193,594.54,,FALSE
+14,Guadalajara ,San Sebastián del Oeste,81,259,5643,21.79,,FALSE
+14,Guadalajara ,Santa María de los Ángeles,82,775,3033,3.91,,FALSE
+14,Guadalajara ,Santa María del Oro,83,216,2028,9.39,,FALSE
+14,Guadalajara ,Sayula,84,412,36778,89.2,,FALSE
+14,Guadalajara ,Tala,85,1996,80365,40.26,,FALSE
+14,Guadalajara ,Talpa de Allende,86,1364,15126,11.09,,FALSE
+14,Guadalajara ,Tamazula de Gordiano,87,619,38396,61.98,,FALSE
+14,Guadalajara ,Tapalpa,88,1301,19506,15,,FALSE
+14,Guadalajara ,Tecalitlán,89,79,16579,208.7,,FALSE
+14,Guadalajara ,Techaluta de Montenegro,90,766,3703,4.84,,FALSE
+14,Guadalajara ,Tecolotlán,91,282,17257,61.28,,FALSE
+14,Guadalajara ,Tenamaxtlán,92,934,7005,7.5,,FALSE
+14,Guadalajara ,Teocaltiche,93,336,41278,123.01,,FALSE
+14,Guadalajara ,Teocuitatlán de Corona,94,1430,10317,7.22,,FALSE
+14,Guadalajara ,Tepatitlán de Morelos,95,1696,141322,83.32,,FALSE
+14,Guadalajara ,Tequila,96,219,42009,191.62,,FALSE
+14,Guadalajara ,Teuchitlán,97,194,9608,49.64,,FALSE
+14,Guadalajara ,Tizapán el Alto,98,714,20961,29.36,,FALSE
+14,Guadalajara ,Tlajomulco de Zúñiga,99,110,549442,4975.03,,FALSE
+14,Guadalajara ,Tolimán,100,512,10310,20.13,,FALSE
+14,Guadalajara ,Tomatlán,101,3014,35824,11.89,,FALSE
+14,Guadalajara ,Tonalá,102,166,536111,3227.64,,FALSE
+14,Guadalajara ,Tonaya,103,294,5960,20.28,,FALSE
+14,Guadalajara ,Tonila,104,145,7919,54.51,,FALSE
+14,Guadalajara ,Totatiche,105,587,4412,7.51,,FALSE
+14,Guadalajara ,Tototlán,106,337,23171,68.74,,FALSE
+14,Guadalajara ,Tuxcacuesco,107,429,4229,9.86,,FALSE
+14,Guadalajara ,Tuxcueca,108,138,6156,44.68,,FALSE
+14,Guadalajara ,Tuxpan,109,726,34535,47.6,,FALSE
+14,Guadalajara ,Unión de San Antonio,110,729,17915,24.56,,FALSE
+14,Guadalajara ,Unión de Tula,111,444,13446,30.31,,FALSE
+14,Guadalajara ,Valle de Guadalupe,112,352,6924,19.69,,FALSE
+14,Guadalajara ,Valle de Juárez,113,196,5389,27.55,,FALSE
+14,Guadalajara ,Villa Corona,114,318,17824,56.05,,FALSE
+14,Guadalajara ,Villa Guerrero,115,673,5417,8.04,,FALSE
+14,Guadalajara ,Villa Hidalgo,116,452,20257,44.82,,FALSE
+14,Guadalajara ,Villa Purificación,117,1849,10704,5.79,,FALSE
+14,Guadalajara ,Yahualica de González Gallo,118,563,22586,40.09,,FALSE
+14,Guadalajara ,Zacoalco de Torres,119,480,28205,58.78,,FALSE
+14,Guadalajara ,Zapopan,120,1164,1332272,1144.93,,FALSE
+14,Guadalajara ,Zapotiltic,121,253,29190,115.45,,FALSE
+14,Guadalajara ,Zapotitlán de Vadillo,122,306,7027,22.98,,FALSE
+14,Guadalajara ,Zapotlán del Rey,123,400,17893,44.75,,FALSE
+14,Guadalajara ,Zapotlán el Grande,124,274,105423,384.54,,FALSE
+14,Guadalajara ,Zapotlanejo,125,719,68519,95.24,,FALSE
