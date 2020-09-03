@@ -1,3 +1,14 @@
+
+
+# Loading Pre-Processed RDS Files ------------------------------------
+# Here, we load all the necessary RDS files. They are precalculated and
+# exported to save time from rerunning them.
+
+# CENSUS DATA
+mexico_census_analyzed <- read_rds("data/mexico_census_analyzed.rds")
+chile_census_analyzed <- read_csv("/Users/carinapeng/Projects/PAHO Risk Assessment/santiago_census_coded.csv")
+
+
 # SERVER
 server <- function(input, output, session) {
     output$selectfile <- renderUI({
@@ -13,6 +24,29 @@ server <- function(input, output, session) {
             )
         )
     })
+    
+    output$dropdown_mexico <- renderUI({
+        if (input$dropdown_country != "Mexico") {
+            return()
+        }
+        
+        selectInput("mexico_dropdown",
+                    "Select city within Mexico",
+                    choices = mexico_census_analyzed$comuna)
+        
+    })
+    
+    output$dropdown_chile <- renderUI({
+        if (input$dropdown_country != "Chile") {
+            return()
+        }
+        
+        selectInput("chile_dropdown",
+                    "Select city within Chile",
+                    choices = chile_census_analyzed$comuna)
+        
+    })
+    
     
     output$selectfile2 <- renderUI({
         if (is.null(input$file1)) {
@@ -74,12 +108,12 @@ server <- function(input, output, session) {
     })
     
     
-    observeEvent(input$Select_test, {
-        updateSelectInput(session,
-                          "mydropdown",
-                          label = "Select neighborhood",
-                          choices = file01()[1])
-    })
+    #observeEvent(input$dropdown_country, {
+        #updateSelectInput(session,
+                          #"dropdown_city",
+                          #label = "Select neighborhood",
+                          #choices = colsname(mexico_census_analyzed$comuna))
+    #})
     
     municipal <- reactive({
         req(input$mydropdown)
