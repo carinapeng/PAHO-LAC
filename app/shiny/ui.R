@@ -129,8 +129,8 @@ ui <- fluidPage(
                     #uiOutput("selectfile"),
                     selectInput("dropdown_country", label = "Select Country", choices = c("Mexico", "Chile")),
                     uiOutput("dropdown_city"),
-                    uiOutput("selectfile2"),
-                    uiOutput("selectfile3"),
+                    uiOutput("selectfile_incidence"),
+                    uiOutput("selectfile_policy"),
                     textInput("phsm_country", label = "Type Country Name from PHSM Dataset", ""),
                     textInput("phsm_area", label = "Type Neighborhood Name from PHSM Dataset", "")
                 ),

@@ -9,6 +9,14 @@ mexico_census_analyzed <- read_rds("data/mexico_census_analyzed.rds")
 chile_census_analyzed <- read_csv("/Users/carinapeng/Projects/PAHO Risk Assessment/santiago_census_coded.csv")
 
 
+#observeEvent(input$Select_test, {
+#updateSelectInput(session,
+#"mydropdown",
+#label = "Select neighborhood",             
+#choices = file01()[1])
+
+#})
+
 # SERVER
 server <- function(input, output, session) {
     
@@ -29,14 +37,6 @@ server <- function(input, output, session) {
                     choices = chile_census_analyzed$comuna)
         
     })
-    
-    #observeEvent(input$Select_test, {
-        #updateSelectInput(session,
-                          #"mydropdown",
-                          #label = "Select neighborhood",             
-                          #choices = file01()[1])
-        
-    #})
     
     # Assign census data based on the dropdown selected
     census <- reactive({ 
@@ -68,78 +68,64 @@ server <- function(input, output, session) {
     #})
     
     
-    output$selectfile2 <- renderUI({
+    output$selectfile_incidence <- renderUI({
         if (is.null(input$file1)) {
             return()
         }
         list(
             hr(),
             selectInput(
-                "Select_test2",
+                "incidence_selectfile",
                 "Select Incidence Data",
                 choices = input$file1$name
             )
         )
     })
     
-    output$selectfile3 <- renderUI({
+    output$selectfile_policy <- renderUI({
         if (is.null(input$file1)) {
             return()
         }
         list(
             hr(),
             selectInput(
-                "Select_test3",
+                "policy_selectfile",
                 "Select WHO PHSM Data",
                 choices = input$file1$name
             )
         )
     })
     
-    
-    file01 <- reactive({
+    incidence <- reactive({
         req(input$file1)
         read.csv(
-            file = input$file1$datapath[input$file1$name == input$Select_test],
+            file = input$file1$datapath[input$file1$name == input$incidence_selectfile],
             header = input$header,
             sep = input$sep,
             quote = input$quote
         )
     })
     
-    file02 <- reactive({
+    policy <- reactive({
         req(input$file1)
         read.csv(
-            file = input$file1$datapath[input$file1$name == input$Select_test2],
+            file = input$file1$datapath[input$file1$name == input$policy_selectfile],
             header = input$header,
             sep = input$sep,
             quote = input$quote
         )
     })
-    
-    file03 <- reactive({
-        req(input$file1)
-        read.csv(
-            file = input$file1$datapath[input$file1$name == input$Select_test3],
-            header = input$header,
-            sep = input$sep,
-            quote = input$quote
-        )
-    })
-    
-    
-        
     
     phsm_municipal <- reactive({
         req(input$phsm_country)
         req(input$phsm_area)
-        file03_municipal1 <- file03() %>%
+        policy_national <- policy() %>%
             filter(country_territory_area == input$phsm_country) %>%
             filter(admin_level == "national")
-        file03_municipal2 <- file03() %>%
+        policy_area <- policy() %>%
             filter(area_covered == input$phsm_area)
-        file03_municipal <-
-            rbind(file03_municipal1, file03_municipal2)
+        policy_join <-
+            rbind(policy_national, policy_area)
         
         social = ifelse("Social and physical distancing measures" %in% x$who_category,
                         0,
@@ -179,12 +165,12 @@ server <- function(input, output, session) {
     
     # TEST - Show the dataframe for testing
     output$df_test <- renderTable({
-    return(municipal())
+    return(phsm_municipal())
     })
     
     df <- reactive({
         req(input$file1)
-        x = file02()
+        x = incidence()
         x[, 1] <- as.Date(x[, 1], "%d/%m/%Y")
         dfR <-
             estimate_R(x, method = "parametric_si", config = make_config(list(
