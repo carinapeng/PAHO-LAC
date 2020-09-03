@@ -12,32 +12,29 @@ chile_census_analyzed <- read_csv("/Users/carinapeng/Projects/PAHO Risk Assessme
 # SERVER
 server <- function(input, output, session) {
     
-    # Dropdown
+    # Dropdown for city selection based on country selection
     output$dropdown_city <- renderUI({
         if (input$dropdown_country == "Mexico") {
             return(
                 selectInput(
-                    "mexico_dropdown",
+                    "city_dropdown",
                     "Select city within Mexico",
                     choices = mexico_census_analyzed$comuna
                 )
             )
         }
         
-        selectInput("chile_dropdown",
+        selectInput("city_dropdown",
                     "Select city within Chile",
                     choices = chile_census_analyzed$comuna)
         
     })
     
-    #output$dropdown_chile <- renderUI({
-        #if (input$dropdown_country != "Chile") {
-            #return()
-        #}
-        
-        #selectInput("chile_dropdown",
-                    #"Select city within Chile",
-                    #choices = chile_census_analyzed$comuna)
+    #observeEvent(input$Select_test, {
+        #updateSelectInput(session,
+                          #"mydropdown",
+                          #label = "Select neighborhood",             
+                          #choices = file01()[1])
         
     #})
     
@@ -47,23 +44,28 @@ server <- function(input, output, session) {
             return(mexico_census_analyzed)
         }
         chile_census_analyzed
-        
     })
     
-    
-    output$selectfile <- renderUI({
-        if (is.null(input$file1)) {
-            return()
-        }
-        list(
-            hr(),
-            selectInput(
-                "Select_test",
-                "Select Census Data",
-                choices = input$file1$name
-            )
-        )
+    municipal <- reactive({
+        req(input$city_dropdown)
+        census_mun <- census() %>%
+            filter(comuna == input$city_dropdown)
+        return(census_mun)
     })
+    
+    #output$selectfile <- renderUI({
+        #if (is.null(input$file1)) {
+            #return()
+        #}
+        #list(
+            #hr(),
+            #selectInput(
+                #"Select_test",
+                #"Select Census Data",
+                #choices = input$file1$name
+            #)
+        #)
+    #})
     
     
     output$selectfile2 <- renderUI({
@@ -125,19 +127,7 @@ server <- function(input, output, session) {
         )
     })
     
-    #municipal <- reactive({
-        #req(input$mydropdown)
-        #file01_municipal <- file01() %>%
-            #filter(comuna == input$mydropdown)
-        #return(file01_municipal)
-    #})
     
-    #municipal <- reactive({
-        #req(input$dropdown_country == "Mexico")
-        #census() %>%
-            #filter(comuna == input$dropdown_mexico)
-        #return(census)
-    #})
         
     
     phsm_municipal <- reactive({
@@ -187,12 +177,10 @@ server <- function(input, output, session) {
     })
     
     
-    # TEST - Show the table for filtered PHSM excel with selected municipal
-    #output$phsm_table_test <- renderTable({
-    #req(input$phsm_country)
-    #req(input$phsm_area)
-    #return(phsm_municipal())
-    #})
+    # TEST - Show the dataframe for testing
+    output$df_test <- renderTable({
+    return(municipal())
+    })
     
     df <- reactive({
         req(input$file1)

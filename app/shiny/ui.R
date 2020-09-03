@@ -126,12 +126,9 @@ ui <- fluidPage(
                 tabPanel(
                     "Data",
                     hr(),
-                    uiOutput("selectfile"),
-                    uiOutput("mydropdown"),
+                    #uiOutput("selectfile"),
                     selectInput("dropdown_country", label = "Select Country", choices = c("Mexico", "Chile")),
                     uiOutput("dropdown_city"),
-                    #uiOutput("dropdown_chile"),
-                    #selectInput('dropdown_city', label = 'Select City', choices = 'No choices here yet'),
                     uiOutput("selectfile2"),
                     uiOutput("selectfile3"),
                     textInput("phsm_country", label = "Type Country Name from PHSM Dataset", ""),
@@ -698,7 +695,7 @@ ui <- fluidPage(
                             verbatimTextOutput("prop_adhere26")
                         )
                     ),
-                    #tableOutput("phsm_table_test"),
+                    tableOutput("df_test"),
                     h4("Public Health and Social Measures Score"),
                     tags$head(tags$style('h1 {color:red;}')),
                     verbatimTextOutput("miti3"),
