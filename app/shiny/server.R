@@ -11,6 +11,46 @@ chile_census_analyzed <- read_csv("/Users/carinapeng/Projects/PAHO Risk Assessme
 
 # SERVER
 server <- function(input, output, session) {
+    
+    # Dropdown
+    output$dropdown_city <- renderUI({
+        if (input$dropdown_country == "Mexico") {
+            return(
+                selectInput(
+                    "mexico_dropdown",
+                    "Select city within Mexico",
+                    choices = mexico_census_analyzed$comuna
+                )
+            )
+        }
+        
+        selectInput("chile_dropdown",
+                    "Select city within Chile",
+                    choices = chile_census_analyzed$comuna)
+        
+    })
+    
+    #output$dropdown_chile <- renderUI({
+        #if (input$dropdown_country != "Chile") {
+            #return()
+        #}
+        
+        #selectInput("chile_dropdown",
+                    #"Select city within Chile",
+                    #choices = chile_census_analyzed$comuna)
+        
+    #})
+    
+    # Assign census data based on the dropdown selected
+    census <- reactive({ 
+        if (input$dropdown_country == "Mexico") {
+            return(mexico_census_analyzed)
+        }
+        chile_census_analyzed
+        
+    })
+    
+    
     output$selectfile <- renderUI({
         if (is.null(input$file1)) {
             return()
@@ -23,28 +63,6 @@ server <- function(input, output, session) {
                 choices = input$file1$name
             )
         )
-    })
-    
-    output$dropdown_mexico <- renderUI({
-        if (input$dropdown_country != "Mexico") {
-            return()
-        }
-        
-        selectInput("mexico_dropdown",
-                    "Select city within Mexico",
-                    choices = mexico_census_analyzed$comuna)
-        
-    })
-    
-    output$dropdown_chile <- renderUI({
-        if (input$dropdown_country != "Chile") {
-            return()
-        }
-        
-        selectInput("chile_dropdown",
-                    "Select city within Chile",
-                    choices = chile_census_analyzed$comuna)
-        
     })
     
     
@@ -107,20 +125,20 @@ server <- function(input, output, session) {
         )
     })
     
-    
-    #observeEvent(input$dropdown_country, {
-        #updateSelectInput(session,
-                          #"dropdown_city",
-                          #label = "Select neighborhood",
-                          #choices = colsname(mexico_census_analyzed$comuna))
+    #municipal <- reactive({
+        #req(input$mydropdown)
+        #file01_municipal <- file01() %>%
+            #filter(comuna == input$mydropdown)
+        #return(file01_municipal)
     #})
     
-    municipal <- reactive({
-        req(input$mydropdown)
-        file01_municipal <- file01() %>%
-            filter(comuna == input$mydropdown)
-        return(file01_municipal)
-    })
+    #municipal <- reactive({
+        #req(input$dropdown_country == "Mexico")
+        #census() %>%
+            #filter(comuna == input$dropdown_mexico)
+        #return(census)
+    #})
+        
     
     phsm_municipal <- reactive({
         req(input$phsm_country)
