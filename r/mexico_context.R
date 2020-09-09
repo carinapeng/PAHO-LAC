@@ -38,7 +38,6 @@
 # contexto22 -> Households that is made up of 1 person age 65 or older
 # contexto23 XX Presence of 1 or more markets
 
-
 setwd("Users/carinapeng/PAHO-LAC")
 
 library(lubridate)
