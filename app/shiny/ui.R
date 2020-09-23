@@ -132,9 +132,7 @@ ui <- fluidPage(
                     uiOutput("selectfile_incidence"),
                     uiOutput("dropdown_phsm_country"),
                     uiOutput("dropdown_phsm_city")
-                    #uiOutput("selectfile_policy"),
-                    #textInput("phsm_country", label = "Type Country Name from PHSM Dataset", ""),
-                    #textInput("phsm_area", label = "Type Neighborhood Name from PHSM Dataset", "")
+                   
                 ),
                 tabPanel(
                     "Individual Vunerability Index",

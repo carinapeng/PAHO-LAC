@@ -54,7 +54,7 @@ server <- function(input, output, session) {
     
     phsm_filtered <- reactive({
         req(input$dropdown_phsm_country)
-        phsm1 <- who_phsm() %>%
+        phsm1 <- who_phsm %>%
             filter(country_territory_area == input$dropdown_phsm_country)
     })
     
