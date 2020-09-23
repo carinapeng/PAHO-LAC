@@ -8,6 +8,15 @@
 mexico_census_analyzed <- read_rds("data/mexico_census_analyzed.rds")
 chile_census_analyzed <- read_csv("/Users/carinapeng/Projects/PAHO Risk Assessment/santiago_census_coded.csv")
 
+# MOBILITY DATA
+mexico_city_mobility <- read_rds("data/mexico_city_mobility.rds")
+
+# WHO POLICY DATA
+who_phsm <- read_rds("data/who_phsm.rds")
+
+#x_test <- unique(who_phsm$who_region)
+#x <- data.frame((matrix(unlist(x_test), nrow=length(x_test), byrow=T))
+#colnames(x) <- "region"
 
 #observeEvent(input$Select_test, {
 #updateSelectInput(session,
@@ -37,6 +46,22 @@ server <- function(input, output, session) {
                     choices = chile_census_analyzed$comuna)
         
     })
+    
+    output$dropdown_phsm_country <- renderUI(
+        selectInput("dropdown_phsm_country","Select country from PHSM", choices= 
+                        as.character(unique(who_phsm$country_territory_area)))
+    )
+    
+    phsm_filtered <- reactive({
+        req(input$dropdown_phsm_country)
+        phsm1 <- who_phsm() %>%
+            filter(country_territory_area == input$dropdown_phsm_country)
+    })
+    
+    output$dropdown_phsm_city <- renderUI(
+        selectInput("dropdown_phsm_city","Select region from PHSM", choices= 
+                        as.character(unique(phsm_filtered()$area_covered)))
+    )
     
     # Assign census data based on the dropdown selected
     census <- reactive({ 
@@ -117,9 +142,9 @@ server <- function(input, output, session) {
     })
     
     phsm_municipal <- reactive({
-        req(input$phsm_country)
-        req(input$phsm_area)
-        policy_national <- policy() %>%
+        #req(input$phsm_country)
+        #req(input$phsm_area)
+        policy_national <- who_phsm() %>%
             filter(country_territory_area == input$phsm_country) %>%
             filter(admin_level == "national")
         policy_area <- policy() %>%

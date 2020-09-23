@@ -130,9 +130,11 @@ ui <- fluidPage(
                     selectInput("dropdown_country", label = "Select Country", choices = c("Mexico", "Chile")),
                     uiOutput("dropdown_city"),
                     uiOutput("selectfile_incidence"),
-                    uiOutput("selectfile_policy"),
-                    textInput("phsm_country", label = "Type Country Name from PHSM Dataset", ""),
-                    textInput("phsm_area", label = "Type Neighborhood Name from PHSM Dataset", "")
+                    uiOutput("dropdown_phsm_country"),
+                    uiOutput("dropdown_phsm_city")
+                    #uiOutput("selectfile_policy"),
+                    #textInput("phsm_country", label = "Type Country Name from PHSM Dataset", ""),
+                    #textInput("phsm_area", label = "Type Neighborhood Name from PHSM Dataset", "")
                 ),
                 tabPanel(
                     "Individual Vunerability Index",
@@ -682,18 +684,21 @@ ui <- fluidPage(
                         ),
                         column(
                             4,
-                            sliderInput(
-                                "prop_adhere",
-                                label = h4(
-                                    "26. Proportion of the population who adheres to mitigation measures"
-                                ),
-                                min = 0,
-                                max = 100,
-                                value = 0,
-                                step = 1
-                            ),
-                            verbatimTextOutput("prop_adhere26")
+                            h4("26. Mobility - school/work obligations"),
+                            verbatimTextOutput("mobility26")
+                        ),
+                        column(
+                            4,
+                            h4("27. Mobility - recreational activities"),
+                            verbatimTextOutput("mobility27")
                         )
+                        
+                    ),
+                    fluidRow(
+                        column(
+                            4,
+                            h4("28. Mobility - public transportation"),
+                            verbatimTextOutput("mobility28"))
                     ),
                     tableOutput("df_test"),
                     h4("Public Health and Social Measures Score"),
